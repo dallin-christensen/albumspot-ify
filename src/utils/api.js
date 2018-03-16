@@ -1,3 +1,7 @@
-export function getTopTracks () {
-  
+export function getUser () {
+
+}
+
+export function getPlaylist () {
+
 }
