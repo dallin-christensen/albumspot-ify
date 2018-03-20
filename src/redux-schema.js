@@ -5,7 +5,8 @@
     }
   },
   user : {
-    //user info
+    authed: true
+    [userId]
   },
   playlist : {
     upNext : [trackId, trackId]
