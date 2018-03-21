@@ -13,7 +13,6 @@ export default function user (state = {}, action) {
       }
 
     case SET_USER:
-      console.log(state.accessToken)
       return {
         ...state,
         [action.user.id]: action.user
