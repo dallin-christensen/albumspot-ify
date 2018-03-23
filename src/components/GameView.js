@@ -6,7 +6,11 @@ class GameView extends Component {
     const { tracks } = this.props
     return(
       tracks.map((item) => {
-        return <div>{item.track.name}</div>
+        return (
+          <div>
+            <div>{item.track.name}</div>
+          </div>
+        )
       })
     )
   }
