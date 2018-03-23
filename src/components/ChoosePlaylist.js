@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PlaylistIcon from './PlaylistIcon'
+import { handleGetPlaylist } from '../actions/playlist'
 
 class ChoosePlaylist extends Component {
   render(){
@@ -8,10 +9,12 @@ class ChoosePlaylist extends Component {
     return (
       allPlaylists.map((pl) => {
 
-        return  <PlaylistIcon
-                  imgSrc={pl.images[0].url}
-                  name={pl.name}
-                />
+        return  <span onClick={() => this.props.dispatch(handleGetPlaylist(pl.href))}>
+                  <PlaylistIcon
+                    imgSrc={pl.images[0].url}
+                    name={pl.name}
+                  />
+                </span>
       })
     )
   }

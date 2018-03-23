@@ -11,3 +11,10 @@ export function fetchUserAndPlaylists (accessToken, cb) {
   Promise.all([getUserPromise, getPlaylistPromise])
   .then((values) => cb(values))
 }
+
+export function fetchPlaylist (accessToken, href, cb) {
+  fetch(href, {
+    headers: { 'Authorization': 'Bearer ' + accessToken }
+  }).then((response) => response.json())
+  .then((playlist) => cb(playlist))
+}
