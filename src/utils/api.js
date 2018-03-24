@@ -16,5 +16,14 @@ export function fetchPlaylist (accessToken, href, cb) {
   fetch(href, {
     headers: { 'Authorization': 'Bearer ' + accessToken }
   }).then((response) => response.json())
-  .then((playlist) => cb(playlist))
+  .then((playlist) => {
+    cb(playlist)
+  })
+}
+
+export function fetchTrackData (accessToken, href, cb) {
+  fetch(href, {
+    headers: { 'Authorization': 'Bearer ' + accessToken }
+  }).then((response) => response.json())
+  .then((tracks) => cb(tracks))
 }
