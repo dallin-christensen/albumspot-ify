@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { trackPlayed } from '../actions/tracks'
 import { shuffle } from '../utils/utils'
+import player from '../utils/player'
 
 
 function ArtOption (props) {

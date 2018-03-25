@@ -1,4 +1,4 @@
-import { SET_USER, REMOVE_USER, SET_ACCESS_TOKEN } from '../actions/user'
+import { SET_USER, REMOVE_USER, SET_ACCESS_TOKEN, SET_DEVICE_ID } from '../actions/user'
 
 export default function user (state = {}, action) {
   switch (action.type) {
@@ -12,6 +12,12 @@ export default function user (state = {}, action) {
       return {
         ...state,
         [action.user.id]: action.user
+      }
+
+    case SET_DEVICE_ID:
+      return {
+        ...state,
+        deviceId: action.deviceId
       }
 
     default:

@@ -3,6 +3,7 @@ export function formatTracks ({ tracks }) {
     return {
       name: trackData.track.name,
       href: trackData.track.href,
+      uri: trackData.track.uri,
       img: trackData.track.album.images[1].url
     }
   })
