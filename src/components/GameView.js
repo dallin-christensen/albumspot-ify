@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { trackPlayed } from '../actions/tracks'
 import { shuffle } from '../utils/utils'
-import player from '../utils/player'
+import Player from './Player'
 
 
 function ArtOption (props) {
@@ -120,8 +120,8 @@ class GameView extends Component {
               {this.shufflePicutres().map((img, i) =>{
                 return <ArtOption key={img+(Date.now()+i)} id={"option_"+i} img={img} fireSelection={this.guess} />
               })}
-              <div>{activeTrack.name}</div>
               <div><span onClick={this.next}>next</span></div>
+              <Player activeTrack={activeTrack.uri} />
             </div>
         }
       </div>
