@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { connectPlayer } from '../utils/api'
+import { setDeviceId } from '../actions/user'
 
 class Player extends Component {
   componentDidMount () {
@@ -9,47 +11,16 @@ class Player extends Component {
     s.src = 'https://sdk.scdn.co/spotify-player.js'
     document.body.appendChild(s)
 
-    window.onSpotifyWebPlaybackSDKReady = () => {
-
-          // debugger
-          const token = 'BQDA4IZfG3Ti4LEUhP_siqOJkjWKAyov35fkz31GRniEDl3rzZqjXllfherrSqSatvcOisSu5dpPoDwaqj_GKUnBTP3cRGoz9C3Z5kFJezmQgkARzyiXriVtBnbgaEexuMYrufXt4sBGLk5xVd3lZMfC6a9s_XE3d0rs1A'
-          const _spotify = window.Spotify
-          const player = new _spotify.Player({
-            name: 'Web Playback SDK Quick Start Player',
-            getOAuthToken: cb => { cb(token); }
-          });
-
-          // Error handling
-          player.addListener('initialization_error', ({ message }) => { console.error(message); });
-          player.addListener('authentication_error', ({ message }) => { console.error(message); });
-          player.addListener('account_error', ({ message }) => { console.error(message); });
-          player.addListener('playback_error', ({ message }) => { console.error(message); });
-
-          // Playback status updates
-          player.addListener('player_state_changed', state => { console.log(state); });
-
-          player.addListener('ready', ({ device_id }) => {
-            this.fetchSongs(device_id);
-          });
-
-          player.connect();
-
-          // fetchSongs = (id) => {
-          //   fetch(`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
-          //     method: 'PUT',
-          //     body: JSON.stringify({ uris: [this.props.activeTrack] }),
-          //     headers: {
-          //       'Content-Type': 'application/json',
-          //       'Authorization': `Bearer ${token}`
-          //     },
-          //   });
-          // }
-      }
+    connectPlayer(this.props.accessToken, this.setDeviceId)
 
   }
 
+  setDeviceId = (deviceId) => {
+    this.props.dispatch(setDeviceId(deviceId))
+  }
+
   fetchSongs = (id) => {
-    const token = 'BQDA4IZfG3Ti4LEUhP_siqOJkjWKAyov35fkz31GRniEDl3rzZqjXllfherrSqSatvcOisSu5dpPoDwaqj_GKUnBTP3cRGoz9C3Z5kFJezmQgkARzyiXriVtBnbgaEexuMYrufXt4sBGLk5xVd3lZMfC6a9s_XE3d0rs1A'
+    const token = this.props.accessToken
     fetch(`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
       method: 'PUT',
       body: JSON.stringify({ uris: [this.props.activeTrack] }),

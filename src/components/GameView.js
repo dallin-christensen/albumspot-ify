@@ -88,19 +88,10 @@ class GameView extends Component {
   guess = (e) => {
     const guessedEl = document.getElementById(e.target.id)
     const guessedVal = guessedEl.dataset.img
-    if(guessedVal === this.state.activeTrack.img){
-      console.log('correct')
-      //grab correct
+    if(guessedVal === this.state.activeTrack.img){ //TODO all this needs replaced with props children and ternary classes
       guessedEl.innerHTML = "CORRECT!"
       guessedEl.classList.add('correct')
-      //place correct message within innerHTML
-      //give 'green' class
     } else {
-      console.log('garbage!')
-      //grab incorrect
-      //grab correct answer
-      //highlight correct green and incorrect red
-      //insert messages accordingly
 
       guessedEl.innerHTML = "wrong :("
       guessedEl.classList.add('incorrect')
