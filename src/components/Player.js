@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { connectPlayer } from '../utils/api'
 import { setDeviceId } from '../actions/user'
+import { formatFetchAllTracks } from '../utils/helpers'
 
 class Player extends Component {
   componentDidMount () {
@@ -17,18 +18,19 @@ class Player extends Component {
 
   setDeviceId = (deviceId) => {
     this.props.dispatch(setDeviceId(deviceId))
+    this.fetchSongs(deviceId)
   }
 
   fetchSongs = (id) => {
     const token = this.props.accessToken
     fetch(`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
       method: 'PUT',
-      body: JSON.stringify({ uris: [this.props.activeTrack] }),
+      body: JSON.stringify({ uris: formatFetchAllTracks(this.props.tracks) }),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
-    });
+    }).then((data) => console.log(data));
   }
 
   render () {
@@ -38,9 +40,10 @@ class Player extends Component {
   }
 }
 
-function mapStateToProps({ user }){
+function mapStateToProps({ user, tracks }){
   return {
-    accessToken: user.accessToken
+    accessToken: user.accessToken,
+    tracks: tracks.tracks
   }
 }
 

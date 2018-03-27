@@ -1,24 +1,22 @@
-import { SET_TRACKS_UNPLAYED, TRACK_PLAYED } from '../actions/tracks'
+import { SET_TRACKS, NEXT_TRACK_ACTIVE } from '../actions/tracks'
 
 const defaultState = {
-  unplayed: [],
-  played: []
+  tracks: [],
+  active: 0
 }
 
 export default function tracks (state = defaultState, action) {
   switch (action.type) {
-    case SET_TRACKS_UNPLAYED:
+    case SET_TRACKS:
       return {
         ...state,
-        unplayed: action.tracks
+        tracks: action.tracks
       }
 
-    case TRACK_PLAYED:
+    case NEXT_TRACK_ACTIVE:
       return {
-        played: state.played.concat([action.track]),
-        unplayed: state.unplayed.filter((track) => {
-          return track.href !== action.track.href
-        })
+        ...state,
+        active: ++state.active,
       }
 
     default:

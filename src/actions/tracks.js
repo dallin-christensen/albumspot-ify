@@ -1,16 +1,15 @@
-export const SET_TRACKS_UNPLAYED = 'SET_TRACKS_UNPLAYED'
-export const TRACK_PLAYED = 'TRACK_PLAYED'
+export const SET_TRACKS = 'SET_TRACKS'
+export const NEXT_TRACK_ACTIVE = 'NEXT_TRACK_ACTIVE'
 
-export function setTracksUnplayed (tracks) {
+export function setTracks (tracks) {
   return {
-    type: SET_TRACKS_UNPLAYED,
+    type: SET_TRACKS,
     tracks
   }
 }
 
-export function trackPlayed (track) {
+export function nextTrackActive () {
   return {
-    type: TRACK_PLAYED,
-    track
+    type: NEXT_TRACK_ACTIVE
   }
 }

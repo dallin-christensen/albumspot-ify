@@ -14,3 +14,9 @@ export function formatArtwork ({ tracks }) {
     return trackData.track.album.images[1].url
   })
 }
+
+export function formatFetchAllTracks(tracks){
+  return tracks.map((track) => {
+    return track.uri
+  })
+}
