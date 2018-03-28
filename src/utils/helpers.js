@@ -9,11 +9,12 @@ export function formatTracks ({ tracks }) {
   })
 }
 
-export function formatArtwork ({ tracks }) {
-  return tracks.items.map((trackData) => {
+export function formatArtwork ({ items }) {
+  return items.map((trackData) => {
     return trackData.track.album.images[1].url
   })
 }
+
 
 export function formatFetchAllTracks(tracks){
   return tracks.map((track) => {

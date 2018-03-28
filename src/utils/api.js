@@ -1,3 +1,5 @@
+import { formatFetchAllTracks } from './helpers'
+
 export function fetchUserAndPlaylists (accessToken, cb) {
   const getUserPromise = fetch('https://api.spotify.com/v1/me', {
     headers: { 'Authorization': 'Bearer ' + accessToken }
@@ -28,6 +30,14 @@ export function fetchTrackData (accessToken, href, cb) {
   .then((tracks) => cb(tracks))
 }
 
+export function renderPlayer() {
+  const s = document.createElement('script')
+  s.type = 'text/javascript'
+  s.async = true
+  s.src = 'https://sdk.scdn.co/spotify-player.js'
+  document.body.appendChild(s)
+}
+
 
 export function connectPlayer (token, cb) {
   window.onSpotifyWebPlaybackSDKReady = () => {
@@ -49,8 +59,20 @@ export function connectPlayer (token, cb) {
 
         player.addListener('ready', ({ device_id }) => {
           cb(device_id)
+          console.log(device_id )
         });
 
         player.connect();
     }
+}
+
+export function fetchPlayTracks(token, device_id, tracks){
+  fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device_id}`, {
+    method: 'PUT',
+    body: JSON.stringify({ uris: formatFetchAllTracks(tracks) }),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+  })
 }

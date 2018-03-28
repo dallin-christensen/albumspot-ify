@@ -5,6 +5,7 @@ import Player from './Player'
 import { nextTrackActive } from '../actions/tracks'
 
 
+
 function ArtOption (props) {
   return (
     <div className="art_option"
@@ -106,12 +107,13 @@ class GameView extends Component {
   }
 }
 
-function mapStateToProps ({ tracks, artwork }) {
+function mapStateToProps ({ tracks, artwork, user }) {
   const activeTrack = tracks.tracks[tracks.active]
   return {
     tracks: tracks.tracks,
     active: activeTrack,
     artwork,
+    accessToken: user.accessToken,
   }
 }
 

@@ -4,7 +4,7 @@ import { fetchUserAndPlaylists, fetchPlaylist } from '../utils/api'
 import { setPlaylist } from './playlist'
 import { formatTracks, formatArtwork } from '../utils/helpers'
 import { setTracks } from './tracks'
-import { setArtwork } from './artwork'
+import { setArtwork, setWrongArtwork } from './artwork'
 import { shuffle } from '../utils/utils'
 
 export function handleInitialData () {
@@ -27,7 +27,9 @@ export function handleGetPlaylist (href) {
     const dispatchPlaylists = (playlist) => {
       dispatch(setPlaylist(playlist))
       dispatch(setTracks(shuffle(formatTracks(playlist))))
-      dispatch(setArtwork(formatArtwork(playlist)))
+      dispatch(setArtwork(formatArtwork(playlist.tracks)))
+      // dispatch(setArtwork(playlist))
+      dispatch(setWrongArtwork())
     }
 
     fetchPlaylist(accessToken, href, dispatchPlaylists)
