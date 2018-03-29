@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchPlayTracks, fetchPause, fetchUnpause, fetchNext, fetchVolume } from '../utils/api'
-import { formatFetchAllTracks } from '../utils/helpers'
-import { nextTrack } from '../actions/shared'
+import './style.css'
+import { fetchPlayTracks, fetchPause, fetchUnpause, fetchNext, fetchVolume } from '../../utils/api'
+import { formatFetchAllTracks } from '../../utils/helpers'
+import { nextTrack } from '../../actions/shared'
+import { FaPlay } from 'react-icons/lib/fa'
 
 
 class Player extends Component {
@@ -59,12 +61,12 @@ class Player extends Component {
 
   render () {
     return (
-      <div>
-        <span onClick={this.togglePause}>play/pause</span><br />
-        <span onClick={this.nextTrack}>next</span><br />
-        <span>volume:{this.state.volume}</span><br />
-        <span onClick={this.volumeUp}>vol up</span><br />
-        <span onClick={this.volumeDown}>vol down</span><br />
+      <div className='player_container'>
+        <span className='player_play' onClick={this.togglePause}><FaPlay /></span>
+        <span onClick={this.nextTrack}>{'>>'}</span>
+        <span>vol: {this.state.volume}</span>
+        <span onClick={this.volumeUp}>{'^'}</span>
+        <span onClick={this.volumeDown}>{'v'}</span>
       </div>
     )
   }

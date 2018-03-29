@@ -1,0 +1,16 @@
+.player_container {
+  padding:5px;
+  margin: 10px auto;
+  background-color: #333;
+  width: 200px;
+  text-align: left;
+  border-radius: 50px;
+  color: #fff;
+}
+
+.player_play {
+
+  border: 1px solid #fff;
+  padding: 10px;
+  border-radius: 30px;
+}

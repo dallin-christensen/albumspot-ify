@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { shuffle } from '../utils/utils' //TODO:may need to get rid of
-import Player from './Player'
-import { clearTracksAndArt } from '../actions/shared'
-import { disconnectPlayer } from '../utils/api'
+import { shuffle } from '../../utils/utils' //TODO:may need to get rid of
+import Player from '../Player/Player'
+import { clearTracksAndArt } from '../../actions/shared'
+import { fetchClearTracks } from '../../utils/api'
 
 
 function ArtOption (props) {
@@ -49,7 +49,7 @@ class GameView extends Component {
 
   clearTracksAndArt = () => {
     this.props.dispatch(clearTracksAndArt())
-    disconnectPlayer()
+    fetchClearTracks(this.props.accessToken, this.props.deviceId)
   }
 
   render(){
@@ -73,7 +73,8 @@ function mapStateToProps ({ tracks, artwork, user }) {
   return {
     activeTrack,
     wrongArtwork,
-    deviceId: user.deviceId
+    deviceId: user.deviceId,
+    accessToken: user.accessToken
   }
 }
 

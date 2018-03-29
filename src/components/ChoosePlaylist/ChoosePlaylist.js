@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import PlaylistIcon from './PlaylistIcon'
-import { handleGetPlaylist } from '../actions/shared'
+import PlaylistIcon from '../PlaylistIcon/PlaylistIcon'
+import { handleGetPlaylist } from '../../actions/shared'
 
 class ChoosePlaylist extends Component {
   render(){

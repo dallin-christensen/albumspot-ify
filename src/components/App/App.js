@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import queryString from 'query-string'
-import { setAccessToken } from '../actions/user'
-import Login from './Login'
-import Dashboard from './Dashboard'
-import { handleInitialData } from '../actions/shared'
+import { setAccessToken } from '../../actions/user'
+import Login from '../Login/Login'
+import Dashboard from '../Dashboard/Dashboard'
+import { handleInitialData } from '../../actions/shared'
 
 
 class App extends Component {

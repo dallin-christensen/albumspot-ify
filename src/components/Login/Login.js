@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { isAuthed } from '../actions/user'
+import { isAuthed } from '../../actions/user'
 
 class Login extends Component {
   componentDidMount () {

@@ -125,3 +125,14 @@ export function fetchVolume (token, percent) {
     },
   })
 }
+
+export function fetchClearTracks (token, device_id) {
+  fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device_id}`, {
+    method: 'PUT',
+    body: JSON.stringify({ uris: [] }),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+  })
+}

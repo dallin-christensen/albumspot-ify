@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import ChoosePlaylist from './ChoosePlaylist'
-import GameView from './GameView'
-import { connectPlayer, renderPlayer } from '../utils/api'
-import { setDeviceId } from '../actions/user'
-import { nextTrack } from '../actions/shared'
+import ChoosePlaylist from '../ChoosePlaylist/ChoosePlaylist'
+import GameView from '../GameView/GameView'
+import { connectPlayer, renderPlayer } from '../../utils/api'
+import { setDeviceId } from '../../actions/user'
+import { nextTrack } from '../../actions/shared'
 
 class Dashboard extends Component {
   componentDidMount () {
