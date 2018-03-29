@@ -28,10 +28,32 @@ export function handleGetPlaylist (href) {
       dispatch(setPlaylist(playlist))
       dispatch(setTracks(shuffle(formatTracks(playlist))))
       dispatch(setArtwork(formatArtwork(playlist.tracks)))
-      // dispatch(setArtwork(playlist))
-      dispatch(setWrongArtwork())
+      dispatch(createWrongArtwork())
     }
 
     fetchPlaylist(accessToken, href, dispatchPlaylists)
+  }
+}
+
+export function createWrongArtwork () {
+  return (dispatch, getState) => {
+    const state = getState()
+    const { active } = state.tracks
+    const { tracks } = state.tracks
+    const artwork = state.artwork.all
+    const activeImg = tracks[active].img
+    let i, wrongs = [], len = artwork.length
+
+    for(i = 0; i < 3; i++){
+      let newImg
+      do {
+        newImg = artwork[Math.floor(Math.random() * len)]
+      } while (newImg === activeImg || wrongs.includes(newImg))
+      wrongs.push(newImg)
+    }
+
+    dispatch(setWrongArtwork(wrongs))
+
+
   }
 }

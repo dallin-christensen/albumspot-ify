@@ -44,7 +44,7 @@ export function connectPlayer (token, cb) {
 
         const _spotify = window.Spotify
         const player = new _spotify.Player({
-          name: 'Web Playback SDK Quick Start Player',
+          name: 'SpotArtify',
           getOAuthToken: cb => { cb(token); }
         });
 
@@ -69,10 +69,14 @@ export function connectPlayer (token, cb) {
 export function fetchPlayTracks(token, device_id, tracks){
   fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device_id}`, {
     method: 'PUT',
-    body: JSON.stringify({ uris: formatFetchAllTracks(tracks) }),
+    body: JSON.stringify({ uris: tracks }),
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
   })
 }
+
+// export function fetchPause
+
+// export function fetchNext

@@ -8,8 +8,9 @@ export function setArtwork (artwork) {
   }
 }
 
-export function setWrongArtwork () {
+export function setWrongArtwork (wrongArtwork) {
   return {
-    type: SET_WRONG_ARTWORK
+    type: SET_WRONG_ARTWORK,
+    wrongArtwork
   }
 }

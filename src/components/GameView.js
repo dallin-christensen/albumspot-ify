@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { shuffle } from '../utils/utils'
+import { shuffle } from '../utils/utils' //TODO:may need to get rid of
 import Player from './Player'
-import { nextTrackActive } from '../actions/tracks'
-
 
 
 function ArtOption (props) {
@@ -24,84 +22,38 @@ function ArtOption (props) {
 }
 
 class GameView extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      availableImgs: this.props.artwork,
-      alternateImgs: this.getThreeImgs(),
-    }
-  }
 
   shufflePicutres = () => {
-    const alts = this.state.alternateImgs
-    const active = [this.props.active.img]
-    return shuffle(alts.concat(active))
-  }
-
-  getThreeImgs = () => {
-
-    //TODO: add a check in here to see if the user has four different pics, if not, bypass do while loop and make necessary changes/notifications
-    const activeImg = this.props.active.img
-
-    let i, threeImgs = []
-    for(i = 0; i < 3; i++){
-      let newImg
-      do {
-        newImg = this.randImage()
-      } while (newImg === activeImg || threeImgs.includes(newImg))
-      threeImgs.push(newImg)
-    }
-
-    return threeImgs
-  }
-
-  randImage = () => {
-
-    const { artwork } = this.props
-    const length = artwork.length
-    const randImg = artwork[Math.floor(Math.random() * artwork.length)]
-    return randImg
-  }
-
-  next = () => {
-    this.props.dispatch(nextTrackActive())
-
-    this.setState({
-      availableImgs: this.props.artwork,
-      alternateImgs: this.getThreeImgs(),
-    })
+    const wrongs = this.props.wrongArtwork
+    const active = [this.props.activeTrack.img]
+    return shuffle(wrongs.concat(active))
   }
 
   guess = (e) => {
     const guessedEl = document.getElementById(e.target.id)
     const guessedVal = guessedEl.dataset.img
-    if(guessedVal === this.props.active.img){ //TODO all this needs replaced with props children and ternary classes
+    if(guessedVal === this.props.activeTrack.img){ //TODO all this needs replaced with props children and ternary classes
       guessedEl.innerHTML = "CORRECT!"
       guessedEl.classList.add('correct')
     } else {
 
       guessedEl.innerHTML = "wrong :("
       guessedEl.classList.add('incorrect')
-      const correctAns = document.getElementById(this.props.active.img)
+      const correctAns = document.getElementById(this.props.activeTrack.img)
       correctAns.innerHTML = "correct answer"
       correctAns.classList.add('correct')
     }
   }
 
   render(){
-    const { active } = this.props
     return(
       <div>
-        {Object.keys(active).length === 0
-          ? <div>loading</div>
-          : <div>
-              {this.shufflePicutres().map((img, i) =>{
-                return <ArtOption key={img+(Date.now()+i)} id={"option_"+i} img={img} fireSelection={this.guess} />
-              })}
-              <div><span onClick={this.next}>next</span></div>
-              <Player />
-            </div>
-        }
+        <div>
+          {this.shufflePicutres().map((img, i) =>{
+            return <ArtOption key={img+(Date.now()+i)} id={"option_"+i} img={img} fireSelection={this.guess} />
+          })}
+          { this.props.deviceId && <Player /> }
+        </div>
       </div>
     )
   }
@@ -109,11 +61,11 @@ class GameView extends Component {
 
 function mapStateToProps ({ tracks, artwork, user }) {
   const activeTrack = tracks.tracks[tracks.active]
+  const { wrongArtwork } = artwork
   return {
-    tracks: tracks.tracks,
-    active: activeTrack,
-    artwork,
-    accessToken: user.accessToken,
+    activeTrack,
+    wrongArtwork,
+    deviceId: user.deviceId
   }
 }
 

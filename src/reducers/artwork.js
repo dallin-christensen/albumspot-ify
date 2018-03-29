@@ -16,7 +16,7 @@ export default function artwork (state = defaultState, action) {
     case SET_WRONG_ARTWORK:
       return {
         ...state,
-        wrongArtwork: true
+        wrongArtwork: action.wrongArtwork
       }
 
     default:

@@ -4,15 +4,13 @@ export function formatTracks ({ tracks }) {
       name: trackData.track.name,
       href: trackData.track.href,
       uri: trackData.track.uri,
-      img: trackData.track.album.images[1].url
+      img: trackData.track.album.images[1].url,
     }
   })
 }
 
 export function formatArtwork ({ items }) {
-  return items.map((trackData) => {
-    return trackData.track.album.images[1].url
-  })
+  return items.map(trackData => trackData.track.album.images[1].url )
 }
 
 
