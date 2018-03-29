@@ -1,4 +1,4 @@
-import { SET_TRACKS, NEXT_TRACK_ACTIVE } from '../actions/tracks'
+import { SET_TRACKS, NEXT_TRACK_ACTIVE, ACTIVE_START_OVER } from '../actions/tracks'
 
 const defaultState = {
   tracks: [],
@@ -17,6 +17,12 @@ export default function tracks (state = defaultState, action) {
       return {
         ...state,
         active: ++state.active,
+      }
+
+    case ACTIVE_START_OVER:
+      return {
+        ...state,
+        active: 0
       }
 
     default:

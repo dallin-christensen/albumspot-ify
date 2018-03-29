@@ -38,32 +38,41 @@ export function renderPlayer() {
   document.body.appendChild(s)
 }
 
-
-export function connectPlayer (token, cb) {
+let player
+export function connectPlayer (token, cb, listenCb) {
   window.onSpotifyWebPlaybackSDKReady = () => {
 
         const _spotify = window.Spotify
-        const player = new _spotify.Player({
+        player = new _spotify.Player({
           name: 'SpotArtify',
-          getOAuthToken: cb => { cb(token); }
+          getOAuthToken: cb => { cb(token); },
+          volume: 0.5
         });
 
         // Error handling
         player.addListener('initialization_error', ({ message }) => { console.error(message); });
         player.addListener('authentication_error', ({ message }) => { console.error(message); });
         player.addListener('account_error', ({ message }) => { console.error(message); });
-        player.addListener('playback_error', ({ message }) => { console.error(message); });
+        player.addListener('playback_error', ({ message }) => {
+          console.error(message);
+        });
 
         // Playback status updates
-        player.addListener('player_state_changed', state => { console.log(state); });
+        player.addListener('player_state_changed', state => {
+          if(state === null){ return }
+          listenCb(state)
+        });
 
         player.addListener('ready', ({ device_id }) => {
           cb(device_id)
-          console.log(device_id )
         });
 
         player.connect();
     }
+}
+
+export function disconnectPlayer(){
+  player.disconnect();
 }
 
 export function fetchPlayTracks(token, device_id, tracks){
@@ -77,6 +86,42 @@ export function fetchPlayTracks(token, device_id, tracks){
   })
 }
 
-// export function fetchPause
+export function fetchPause(token) {
+  fetch('https://api.spotify.com/v1/me/player/pause', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+  })
+}
 
-// export function fetchNext
+export function fetchUnpause (token) {
+  fetch('https://api.spotify.com/v1/me/player/play', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+  })
+}
+
+export function fetchNext (token) {
+  fetch('https://api.spotify.com/v1/me/player/next', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+  })
+}
+
+export function fetchVolume (token, percent) {
+  fetch(`https://api.spotify.com/v1/me/player/volume?volume_percent=${percent}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+  })
+}

@@ -6,6 +6,7 @@ import { formatTracks, formatArtwork } from '../utils/helpers'
 import { setTracks } from './tracks'
 import { setArtwork, setWrongArtwork } from './artwork'
 import { shuffle } from '../utils/utils'
+import { nextTrackActive, activeStartOver } from './tracks'
 
 export function handleInitialData () {
   return (dispatch, getState) => {
@@ -53,7 +54,20 @@ export function createWrongArtwork () {
     }
 
     dispatch(setWrongArtwork(wrongs))
+  }
+}
 
+export function nextTrack () {
+  return (dispatch) => {
+    dispatch(nextTrackActive())
+    dispatch(createWrongArtwork())
+  }
+}
 
+export function clearTracksAndArt () {
+  return (dispatch) => {
+    dispatch(setTracks([]))
+    dispatch(setArtwork([]))
+    dispatch(activeStartOver())
   }
 }

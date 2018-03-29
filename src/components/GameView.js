@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { shuffle } from '../utils/utils' //TODO:may need to get rid of
 import Player from './Player'
+import { clearTracksAndArt } from '../actions/shared'
+import { disconnectPlayer } from '../utils/api'
 
 
 function ArtOption (props) {
@@ -45,10 +47,16 @@ class GameView extends Component {
     }
   }
 
+  clearTracksAndArt = () => {
+    this.props.dispatch(clearTracksAndArt())
+    disconnectPlayer()
+  }
+
   render(){
     return(
       <div>
         <div>
+          <span onClick={this.clearTracksAndArt}>back</span>
           {this.shufflePicutres().map((img, i) =>{
             return <ArtOption key={img+(Date.now()+i)} id={"option_"+i} img={img} fireSelection={this.guess} />
           })}
