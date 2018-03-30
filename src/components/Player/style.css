@@ -16,6 +16,19 @@
 
 .left_section{}
 
+.player_play_border{
+  display: inline-block;
+  border-radius: 50px;
+  border: 1px solid #191414;
+}
+
+.player_play_border:hover{
+  border: 1px solid #fff;
+}
+.player_play_border:active{
+  border: 1px solid #191414;
+}
+
 .player_play {
   width: 25px;
   border: 1px solid #fff;
@@ -25,16 +38,25 @@
   display: inline-block;
   text-align: center;
   vertical-align: middle;
+  cursor: pointer;
 }
 .extra_margin_left{
-  margin-left: 1px;
+  margin-left: 2px;
 }
+
 
 .player_skip {
   display: inline-block;
   font-size: 30px;
   vertical-align: middle;
   padding: 0px 5px 5px 5px;
+  cursor: pointer;
+}
+
+.player_skip:active {
+  font-size: 28px;
+  margin-bottom: 1px;
+  margin-left: 1px;
 }
 
 .volume_section {

@@ -55,10 +55,12 @@ class Player extends Component {
     return (
       <div className='player_container'>
         <div className='left_section'>
-          <div className='player_play' onClick={this.togglePause}>
-            {this.state.paused
-              ? <FaPlay className='extra_margin_left' />
-              : <FaPause /> }
+          <div className='player_play_border'>
+            <div className='player_play' onClick={this.togglePause}>
+              {this.state.paused
+                ? <FaPlay className='extra_margin_left' />
+                : <FaPause /> }
+            </div>
           </div>
           <div className='player_skip' onClick={this.nextTrack}>
             <MdSkipNext />

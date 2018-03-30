@@ -4,6 +4,7 @@ import { shuffle } from '../../utils/utils' //TODO:may need to get rid of
 import Player from '../Player/Player'
 import { clearTracksAndArt } from '../../actions/shared'
 import { fetchClearTracks } from '../../utils/api'
+import './style.css'
 
 
 function ArtOption (props) {
@@ -14,9 +15,10 @@ function ArtOption (props) {
       onClick={props.fireSelection}
       style={{
         backgroundImage: `url(${props.img})`,
-        width: 200,
-        height: 200,
-        backgroundSize: 'cover'
+        width: 245,
+        height: 245,
+        backgroundSize: 'cover',
+        borderRadius: 5
       }}>
 
     </div>
@@ -57,9 +59,11 @@ class GameView extends Component {
       <div>
         <div>
           <span onClick={this.clearTracksAndArt}>back</span>
-          {this.shufflePicutres().map((img, i) =>{
-            return <ArtOption key={img+(Date.now()+i)} id={"option_"+i} img={img} fireSelection={this.guess} />
-          })}
+          <div className='art_container'>
+            {this.shufflePicutres().map((img, i) =>{
+              return <ArtOption key={img+(Date.now()+i)} id={"option_"+i} img={img} fireSelection={this.guess} />
+            })}
+          </div>
           { this.props.deviceId && <Player /> }
         </div>
       </div>
