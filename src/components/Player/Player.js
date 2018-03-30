@@ -4,7 +4,10 @@ import './style.css'
 import { fetchPlayTracks, fetchPause, fetchUnpause, fetchNext, fetchVolume } from '../../utils/api'
 import { formatFetchAllTracks } from '../../utils/helpers'
 import { nextTrack } from '../../actions/shared'
-import { FaPlay } from 'react-icons/lib/fa'
+import { FaPlay, FaPause } from 'react-icons/lib/fa'
+import { MdSkipNext, MdVolumeUp } from 'react-icons/lib/md'
+import Slider from 'react-rangeslider'
+import 'react-rangeslider/lib/index.css'
 
 
 class Player extends Component {
@@ -41,32 +44,39 @@ class Player extends Component {
     dispatch(nextTrack())
   }
 
-  volumeUp = () => {
-    const { volume } = this.state
-    const newVol = volume >= 100 ? 100 : volume + 10
-    fetchVolume(this.props.token, newVol)
+  changeVolume = (value) => {
+    fetchVolume(this.props.token, value)
     this.setState({
-      volume: newVol
-    })
-  }
-
-  volumeDown = () => {
-    const { volume } = this.state
-    const newVol = volume <= 0 ? 0 : volume - 10
-    fetchVolume(this.props.token, newVol)
-    this.setState({
-      volume: newVol
+      volume: value
     })
   }
 
   render () {
     return (
       <div className='player_container'>
-        <span className='player_play' onClick={this.togglePause}><FaPlay /></span>
-        <span onClick={this.nextTrack}>{'>>'}</span>
-        <span>vol: {this.state.volume}</span>
-        <span onClick={this.volumeUp}>{'^'}</span>
-        <span onClick={this.volumeDown}>{'v'}</span>
+        <div className='left_section'>
+          <div className='player_play' onClick={this.togglePause}>
+            {this.state.paused
+              ? <FaPlay className='extra_margin_left' />
+              : <FaPause /> }
+          </div>
+          <div className='player_skip' onClick={this.nextTrack}>
+            <MdSkipNext />
+          </div>
+        </div>
+
+        <div className='volume_section'>
+          <div className='player_vol_symbol'>
+            <MdVolumeUp />
+          </div>
+          <div className='player_vol_slider'>
+            <Slider
+              value={this.state.volume}
+              orientation='horizontal'
+              onChange={this.changeVolume}
+            />
+          </div>
+        </div>
       </div>
     )
   }
