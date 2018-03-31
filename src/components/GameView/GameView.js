@@ -9,31 +9,31 @@ import './tile.css'
 
 
 function ArtOption (props) {
+  //add class 'hover' to flip-container to make flip when clicking
   return (
+      <div className="flip-container">
+      	<div className="flipper art_option"
+          id={props.img}
+          data-img={props.img}
+          onClick={props.fireSelection}
+          style={{
+            backgroundImage: `url(${props.img})`,
+            width: 245,
+            height: 245,
+            backgroundSize: 'cover',
+            borderRadius: 5}}>
+      		<div className="front">
 
-      <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
-      	<div class="flipper">
-      		<div class="front">
-            <div className="art_option"
-              id={props.img}
-              data-img={props.img}
-              onClick={props.fireSelection}
-              style={{
-                backgroundImage: `url(${props.img})`,
-                width: 245,
-                height: 245,
-                backgroundSize: 'cover',
-                borderRadius: 5
-              }}></div>
       		</div>
-      		<div class="back">
-      			<div>thing</div>
+          <div className="back">
+            {props.children}
       		</div>
       	</div>
       </div>
-
   )
 }
+
+
 
 class GameView extends Component {
 
@@ -71,7 +71,13 @@ class GameView extends Component {
           <span onClick={this.clearTracksAndArt}>back</span>
           <div className='art_container'>
             {this.shufflePicutres().map((img, i) =>{
-              return <ArtOption key={img+(Date.now()+i)} id={"option_"+i} img={img} fireSelection={this.guess} />
+              return <ArtOption
+                        key={img+(Date.now()+i)}
+                        id={"option_"+i} img={img}
+                        fireSelection={this.guess}
+                      >
+                        {this.props.activeTrack.img === img ? "correct" : "NOPE"}
+                      </ArtOption>
             })}
           </div>
           { this.props.deviceId && <Player /> }
