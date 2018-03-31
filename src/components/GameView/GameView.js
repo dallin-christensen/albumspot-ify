@@ -5,23 +5,33 @@ import Player from '../Player/Player'
 import { clearTracksAndArt } from '../../actions/shared'
 import { fetchClearTracks } from '../../utils/api'
 import './style.css'
+import './tile.css'
 
 
 function ArtOption (props) {
   return (
-    <div className="art_option"
-      id={props.img}
-      data-img={props.img}
-      onClick={props.fireSelection}
-      style={{
-        backgroundImage: `url(${props.img})`,
-        width: 245,
-        height: 245,
-        backgroundSize: 'cover',
-        borderRadius: 5
-      }}>
 
-    </div>
+      <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+      	<div class="flipper">
+      		<div class="front">
+            <div className="art_option"
+              id={props.img}
+              data-img={props.img}
+              onClick={props.fireSelection}
+              style={{
+                backgroundImage: `url(${props.img})`,
+                width: 245,
+                height: 245,
+                backgroundSize: 'cover',
+                borderRadius: 5
+              }}></div>
+      		</div>
+      		<div class="back">
+      			<div>thing</div>
+      		</div>
+      	</div>
+      </div>
+
   )
 }
 
