@@ -2,14 +2,17 @@
 	perspective: 1000px;
 }
 
-.flip-container:hover .flipper, .flip-container.hover .flipper {
+.flip-container.rotate .flipper {
 	transform: rotateY(180deg);
 }
 
 .flipper {
 	transition: 0.5s;
 	transform-style: preserve-3d;
-
+	width: 245px;
+	height: 245px;
+	background-size: cover;
+	border-radius: 5px;
 	position: relative;
 }
 
@@ -18,6 +21,8 @@
 	position: absolute;
 	top: 0;
 	left: 0;
+	width: 100%;
+	height: 100%;
 }
 
 .front {

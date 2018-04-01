@@ -8,31 +8,53 @@ import './style.css'
 import './tile.css'
 
 
-function ArtOption (props) {
+class ArtOption extends Component {
   //add class 'hover' to flip-container to make flip when clicking
-  return (
-      <div className="flip-container">
-      	<div className="flipper art_option"
-          id={props.img}
-          data-img={props.img}
-          onClick={props.fireSelection}
-          style={{
-            backgroundImage: `url(${props.img})`,
-            width: 245,
-            height: 245,
-            backgroundSize: 'cover',
-            borderRadius: 5}}>
-      		<div className="front">
+  constructor (props) {
+    super(props)
+    this.state = {
+      isFlipped: false,
+    }
+  }
+  flipTile = (e) => {
+    const clicked = e.target
 
-      		</div>
-          <div className="back">
-            {props.children}
-      		</div>
-      	</div>
+    this.setState({
+      isFlipped: true,
+    })
+  }
+  render() {
+    return (
+      <div className="flip-container">
+        <div className="flipper art_option"
+          id={this.props.img}
+          data-img={this.props.img}
+          onClick={this.flipTile}
+          style={{
+            backgroundImage: `url(${this.props.img})` ,
+            transform: this.state.isFlipped ? 'rotateY(180deg)' : 'none',
+          }}>
+          <div className="front"></div>
+          <div className="back"
+            style={{
+              backgroundColor: 'rgba(10, 160, 10, 0.50)',
+
+            }}>
+            {this.props.children}
+          </div>
+        </div>
       </div>
-  )
+    )
+  }
 }
 
+// opacity: '0.9',
+// boxShadow: this.props.correct
+//   ? 'outset 0 0 0 125px rgba(10, 160, 10, 0.94)'
+//   : 'outset 0 0 0 125px rgba(160, 10, 10, 0.94)',
+
+// opacity: 0.7;
+// box-shadow:inset 0 0 0 100px rgba(10, 160, 10, 0.34);
 
 
 class GameView extends Component {
@@ -43,21 +65,21 @@ class GameView extends Component {
     return shuffle(wrongs.concat(active))
   }
 
-  guess = (e) => {
-    const guessedEl = document.getElementById(e.target.id)
-    const guessedVal = guessedEl.dataset.img
-    if(guessedVal === this.props.activeTrack.img){ //TODO all this needs replaced with props children and ternary classes
-      guessedEl.innerHTML = "CORRECT!"
-      guessedEl.classList.add('correct')
-    } else {
-
-      guessedEl.innerHTML = "wrong :("
-      guessedEl.classList.add('incorrect')
-      const correctAns = document.getElementById(this.props.activeTrack.img)
-      correctAns.innerHTML = "correct answer"
-      correctAns.classList.add('correct')
-    }
-  }
+  // guess = (e) => {
+  //   const guessedEl = document.getElementById(e.target.id)
+  //   const guessedVal = guessedEl.dataset.img
+  //   if(guessedVal === this.props.activeTrack.img){ //TODO all this needs replaced with props children and ternary classes
+  //     guessedEl.innerHTML = "CORRECT!"
+  //     guessedEl.classList.add('correct')
+  //   } else {
+  //
+  //     guessedEl.innerHTML = "wrong :("
+  //     guessedEl.classList.add('incorrect')
+  //     const correctAns = document.getElementById(this.props.activeTrack.img)
+  //     correctAns.innerHTML = "correct answer"
+  //     correctAns.classList.add('correct')
+  //   }
+  // }
 
   clearTracksAndArt = () => {
     this.props.dispatch(clearTracksAndArt())
@@ -65,18 +87,20 @@ class GameView extends Component {
   }
 
   render(){
+    const { activeTrack } = this.props
     return(
       <div>
         <div>
           <span onClick={this.clearTracksAndArt}>back</span>
           <div className='art_container'>
             {this.shufflePicutres().map((img, i) =>{
+              const isCorrect = activeTrack.img === img
               return <ArtOption
                         key={img+(Date.now()+i)}
                         id={"option_"+i} img={img}
-                        fireSelection={this.guess}
+                        correct={isCorrect}
                       >
-                        {this.props.activeTrack.img === img ? "correct" : "NOPE"}
+                        {activeTrack.img === img ? "correct" : "NOPE"}
                       </ArtOption>
             })}
           </div>
