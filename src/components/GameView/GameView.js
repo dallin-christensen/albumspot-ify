@@ -24,23 +24,34 @@ class ArtOption extends Component {
     })
   }
   render() {
+    const { correct, img, children } = this.props
     return (
       <div className="flip-container">
         <div className="flipper art_option"
-          id={this.props.img}
-          data-img={this.props.img}
+          id={img}
+          data-img={img}
           onClick={this.flipTile}
           style={{
-            backgroundImage: `url(${this.props.img})` ,
             transform: this.state.isFlipped ? 'rotateY(180deg)' : 'none',
           }}>
-          <div className="front"></div>
+          <div className="front"
+            style={{
+              backgroundImage: `url(${img})` ,
+            }}
+          ></div>
           <div className="back"
             style={{
-              backgroundColor: 'rgba(10, 160, 10, 0.50)',
+              backgroundImage: `url(${img})`,
+            }}
+          >
+            <div
+              style={{
+                background: correct ? 'rgba(10, 160, 10, 0.7)' : 'rgba(160, 10, 10, 0.7)' ,
+              }}
+            >
+              {children}
+            </div>
 
-            }}>
-            {this.props.children}
           </div>
         </div>
       </div>
