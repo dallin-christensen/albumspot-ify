@@ -3,28 +3,20 @@ import { connect } from 'react-redux'
 import { shuffle } from '../../utils/utils' //TODO:may need to get rid of
 import Player from '../Player/Player'
 import { clearTracksAndArt } from '../../actions/shared'
+import { guess } from '../../actions/game'
 import { fetchClearTracks } from '../../utils/api'
+import { IoIosCheckmarkOutline, IoIosCloseOutline } from 'react-icons/lib/io'
 import './style.css'
 import './tile.css'
 
 
 class ArtOption extends Component {
-  //add class 'hover' to flip-container to make flip when clicking
-  constructor (props) {
-    super(props)
-    this.state = {
-      isFlipped: false,
-    }
-  }
   flipTile = (e) => {
     const clicked = e.target
-
-    this.setState({
-      isFlipped: true,
-    })
+    this.props.dispatch(guess(this.props.correct))
   }
   render() {
-    const { correct, img, children } = this.props
+    const { correct, img, children, hasGuessed } = this.props
     return (
       <div className="flip-container">
         <div className="flipper art_option"
@@ -32,7 +24,7 @@ class ArtOption extends Component {
           data-img={img}
           onClick={this.flipTile}
           style={{
-            transform: this.state.isFlipped ? 'rotateY(180deg)' : 'none',
+            transform: hasGuessed ? 'rotateY(180deg)' : 'none',
           }}>
           <div className="front"
             style={{
@@ -49,9 +41,11 @@ class ArtOption extends Component {
                 background: correct ? 'rgba(10, 160, 10, 0.7)' : 'rgba(160, 10, 10, 0.7)' ,
               }}
             >
-              {children}
+              {correct
+                ? <IoIosCheckmarkOutline />
+                : <IoIosCloseOutline />
+              }
             </div>
-
           </div>
         </div>
       </div>
@@ -59,13 +53,14 @@ class ArtOption extends Component {
   }
 }
 
-// opacity: '0.9',
-// boxShadow: this.props.correct
-//   ? 'outset 0 0 0 125px rgba(10, 160, 10, 0.94)'
-//   : 'outset 0 0 0 125px rgba(160, 10, 10, 0.94)',
+function mapArtOptionStateToProps ({ game }) {
+  const { hasGuessed } = game
+  return {
+    hasGuessed,
+  }
+}
 
-// opacity: 0.7;
-// box-shadow:inset 0 0 0 100px rgba(10, 160, 10, 0.34);
+const ConnectedArtOption = connect(mapArtOptionStateToProps)(ArtOption)
 
 
 class GameView extends Component {
@@ -75,22 +70,6 @@ class GameView extends Component {
     const active = [this.props.activeTrack.img]
     return shuffle(wrongs.concat(active))
   }
-
-  // guess = (e) => {
-  //   const guessedEl = document.getElementById(e.target.id)
-  //   const guessedVal = guessedEl.dataset.img
-  //   if(guessedVal === this.props.activeTrack.img){ //TODO all this needs replaced with props children and ternary classes
-  //     guessedEl.innerHTML = "CORRECT!"
-  //     guessedEl.classList.add('correct')
-  //   } else {
-  //
-  //     guessedEl.innerHTML = "wrong :("
-  //     guessedEl.classList.add('incorrect')
-  //     const correctAns = document.getElementById(this.props.activeTrack.img)
-  //     correctAns.innerHTML = "correct answer"
-  //     correctAns.classList.add('correct')
-  //   }
-  // }
 
   clearTracksAndArt = () => {
     this.props.dispatch(clearTracksAndArt())
@@ -106,13 +85,11 @@ class GameView extends Component {
           <div className='art_container'>
             {this.shufflePicutres().map((img, i) =>{
               const isCorrect = activeTrack.img === img
-              return <ArtOption
+              return <ConnectedArtOption
                         key={img+(Date.now()+i)}
                         id={"option_"+i} img={img}
                         correct={isCorrect}
-                      >
-                        {activeTrack.img === img ? "correct" : "NOPE"}
-                      </ArtOption>
+                      />
             })}
           </div>
           { this.props.deviceId && <Player /> }

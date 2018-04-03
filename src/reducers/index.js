@@ -4,6 +4,7 @@ import allPlaylists from './allPlaylists'
 import playlist from './playlist'
 import tracks from './tracks'
 import artwork from './artwork'
+import game from './game'
 // import authedUser from './authedUser'
 // import { loadingBarReducer } from 'react-redux-loading'
 
@@ -13,4 +14,5 @@ export default combineReducers({
   playlist,
   tracks,
   artwork,
+  game,
 })

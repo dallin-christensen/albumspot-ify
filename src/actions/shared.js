@@ -7,6 +7,7 @@ import { setTracks } from './tracks'
 import { setArtwork, setWrongArtwork } from './artwork'
 import { shuffle } from '../utils/utils'
 import { nextTrackActive, activeStartOver } from './tracks'
+import { resetGuess } from './game'
 
 export function handleInitialData () {
   return (dispatch, getState) => {
@@ -59,6 +60,7 @@ export function createWrongArtwork () {
 
 export function nextTrack () {
   return (dispatch) => {
+    dispatch(resetGuess())
     dispatch(nextTrackActive())
     dispatch(createWrongArtwork())
   }
