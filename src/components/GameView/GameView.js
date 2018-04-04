@@ -34,9 +34,9 @@ class ArtOption extends Component {
           onClick={!hasGuessed && this.flipTile}
           style={{
             transform: hasGuessed && isCorrect
-                        ? 'rotateY(180deg)'
+                        ? 'rotateY(-180deg)'
                         : hasGuessed && !correct && clicked
-                          ? 'rotateY(-180deg)'
+                          ? 'rotateY(180deg)'
                           : 'none'
           }}>
           <div className="front"

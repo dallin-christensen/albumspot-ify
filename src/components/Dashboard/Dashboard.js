@@ -16,11 +16,13 @@ class Dashboard extends Component {
     this.props.dispatch(setDeviceId(deviceId))
   }
 
-  listenForNextTrack = ({ track_window, duration }) => {
-    const { current_track } = track_window
+  listenForNextTrack = (response) => {
+    const { current_track } = response.track_window
 
-    if(current_track.uri !== this.props.activeUri && duration !== 0){
-      this.props.dispatch(nextTrack())
+    if(current_track.uri !== this.props.activeUri
+      && current_track.linked_from_uri !== this.props.activeUri
+      && response.duration !== 0){
+        this.props.dispatch(nextTrack())
     }
   }
 

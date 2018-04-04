@@ -41,7 +41,6 @@ class Player extends Component {
   nextTrack = () => {
     const { token, dispatch } = this.props
     fetchNext(token)
-    dispatch(nextTrack())
   }
 
   changeVolume = (value) => {
