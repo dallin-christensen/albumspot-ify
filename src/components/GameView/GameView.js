@@ -11,20 +11,33 @@ import './tile.css'
 
 
 class ArtOption extends Component {
+  constructor (props){
+    super(props)
+
+    this.state = {
+      clicked: false,
+    }
+  }
   flipTile = (e) => {
     const clicked = e.target
-    this.props.dispatch(guess(this.props.correct))
+    this.setState({ clicked: true, })
+    this.props.dispatch(guess(this.props.isCorrect))
   }
   render() {
-    const { correct, img, children, hasGuessed } = this.props
+    const { isCorrect, img, children, hasGuessed, correct } = this.props
+    const { clicked } = this.state
     return (
       <div className="flip-container">
         <div className="flipper art_option"
           id={img}
           data-img={img}
-          onClick={this.flipTile}
+          onClick={!hasGuessed && this.flipTile}
           style={{
-            transform: hasGuessed ? 'rotateY(180deg)' : 'none',
+            transform: hasGuessed && isCorrect
+                        ? 'rotateY(180deg)'
+                        : hasGuessed && !correct && clicked
+                          ? 'rotateY(-180deg)'
+                          : 'none'
           }}>
           <div className="front"
             style={{
@@ -38,10 +51,10 @@ class ArtOption extends Component {
           >
             <div
               style={{
-                background: correct ? 'rgba(10, 160, 10, 0.7)' : 'rgba(160, 10, 10, 0.7)' ,
+                background: isCorrect ? 'rgba(10, 160, 10, 0.7)' : 'rgba(160, 10, 10, 0.7)' ,
               }}
             >
-              {correct
+              {isCorrect
                 ? <IoIosCheckmarkOutline />
                 : <IoIosCloseOutline />
               }
@@ -54,9 +67,10 @@ class ArtOption extends Component {
 }
 
 function mapArtOptionStateToProps ({ game }) {
-  const { hasGuessed } = game
+  const { hasGuessed, correct } = game
   return {
     hasGuessed,
+    correct,
   }
 }
 
@@ -88,7 +102,7 @@ class GameView extends Component {
               return <ConnectedArtOption
                         key={img+(Date.now()+i)}
                         id={"option_"+i} img={img}
-                        correct={isCorrect}
+                        isCorrect={isCorrect}
                       />
             })}
           </div>
