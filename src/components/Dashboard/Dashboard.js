@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import ChoosePlaylist from '../ChoosePlaylist/ChoosePlaylist'
 import GameView from '../GameView/GameView'
 import { connectPlayer, renderPlayer } from '../../utils/api'
+import { checkForChangedTrack } from '../../utils/helpers'
 import { setDeviceId } from '../../actions/user'
 import { nextTrack } from '../../actions/shared'
 
@@ -17,12 +18,10 @@ class Dashboard extends Component {
   }
 
   listenForNextTrack = (response) => {
-    const { current_track } = response.track_window
+    const { dispatch, active } = this.props
 
-    if(current_track.uri !== this.props.activeUri
-      && current_track.linked_from_uri !== this.props.activeUri
-      && response.duration !== 0){
-        this.props.dispatch(nextTrack())
+    if(checkForChangedTrack(active, response)){
+      dispatch(nextTrack())
     }
   }
 
@@ -30,7 +29,7 @@ class Dashboard extends Component {
     const { allPlaylists, tracks, artwork } = this.props
     return (
       !allPlaylists.length
-        ? <div>Loading</div>
+        ? <div>Zero Public Playlists</div>
         : !Object.keys(tracks).length || !artwork.length
             ?<ChoosePlaylist />
             :<GameView />
@@ -40,13 +39,13 @@ class Dashboard extends Component {
 
 function mapStateToProps ({ allPlaylists, tracks, artwork, user }) {
   const allTracks = tracks.tracks
-  const activeUri = allTracks.length ? allTracks[tracks.active].uri : null
+  const active = allTracks.length ? allTracks[tracks.active] : null
   return {
     allPlaylists,
     tracks,
     artwork: artwork.all,
     accessToken: user.accessToken,
-    activeUri,
+    active,
   }
 }
 

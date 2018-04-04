@@ -19,3 +19,16 @@ export function formatFetchAllTracks(tracks){
     return track.uri
   })
 }
+
+export function checkForChangedTrack(active, response) {
+  const { current_track } = response.track_window
+
+  if(current_track.uri !== active.uri
+    && current_track.linked_from_uri !== active.uri
+    && current_track.name !== active.name
+    && response.duration !== 0){
+      return true
+  }
+
+  return false
+}

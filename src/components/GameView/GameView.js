@@ -31,7 +31,7 @@ class ArtOption extends Component {
         <div className="flipper art_option"
           id={img}
           data-img={img}
-          onClick={!hasGuessed && this.flipTile}
+          onClick={!hasGuessed ? this.flipTile : undefined}
           style={{
             transform: hasGuessed && isCorrect
                         ? 'rotateY(-180deg)'

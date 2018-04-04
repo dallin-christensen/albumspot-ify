@@ -3,19 +3,26 @@ black: #191414
 green:#1db954 */
 
 .playlist_icon_container {
-  margin: 20px;
+  margin: 20px 10px;
   padding: 10px;
   cursor: pointer;
+  transition: all .1s ease-in-out;
 }
 
 .playlist_icon {
   margin: 20px;
   width: 250px;
-  border: 2px solid #fff;
-  border-radius: 10px;
+  /* border: 2px solid #fff; */
+  /* border-radius: 10px; */
+  border-radius: 150px;
+  /* transition: all .3s ease-in-out; */
 }
 
 .playlist_title {
   font-size: 20px;
   color: #fff;
+}
+
+.playlist_icon_container:hover {
+  transform: scale(1.15);
 }

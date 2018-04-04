@@ -17,7 +17,6 @@ class ChoosePlaylist extends Component {
         </p>
         <div className='playlist_container'>
           {allPlaylists.map((pl) => {
-
             return  <span onClick={() => this.props.dispatch(handleGetPlaylist(pl.href))}>
                       <PlaylistIcon
                         imgSrc={pl.images[0].url}
