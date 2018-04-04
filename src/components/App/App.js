@@ -5,6 +5,7 @@ import { setAccessToken } from '../../actions/user'
 import Login from '../Login/Login'
 import Dashboard from '../Dashboard/Dashboard'
 import { handleInitialData } from '../../actions/shared'
+import './style.css'
 
 
 class App extends Component {

@@ -1,0 +1,21 @@
+/* spotify hex's
+black: #191414
+green:#1db954 */
+
+.playlist_icon_container {
+  margin: 20px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.playlist_icon {
+  margin: 20px;
+  width: 250px;
+  border: 2px solid #fff;
+  border-radius: 10px;
+}
+
+.playlist_title {
+  font-size: 20px;
+  color: #fff;
+}

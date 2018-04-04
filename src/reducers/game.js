@@ -1,4 +1,4 @@
-import { GUESS, RESET_GUESS } from '../actions/game'
+import { GUESS, RESET_GUESS, CLEAR_GAME } from '../actions/game'
 
 const defaultState = {
   hasGuessed: false,
@@ -21,6 +21,14 @@ export default function user (state = defaultState, action) {
         ...state,
         hasGuessed: false,
         correct: false,
+      }
+
+    case CLEAR_GAME:
+      return {
+        ...state,
+        hasGuessed: false,
+        correct: false,
+        score: 0,
       }
 
     default:

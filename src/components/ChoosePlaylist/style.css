@@ -1,0 +1,24 @@
+.playlist_container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+.user_greeting {
+  font-size: 40px;
+  color: #fff;
+}
+
+.user_instructions {
+  color: #fff;
+  font-size: 20px;
+  background-color: #1db954;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 0 0 5px 0;
+  border-radius: 50px;
+}
+
+.arrows {
+  font-size: 30px;
+}

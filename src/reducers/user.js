@@ -11,7 +11,8 @@ export default function user (state = {}, action) {
     case SET_USER:
       return {
         ...state,
-        [action.user.id]: action.user
+        [action.user.id]: action.user,
+        userID: action.user.id,
       }
 
     case SET_DEVICE_ID:
