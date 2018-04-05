@@ -20,14 +20,16 @@ export function formatFetchAllTracks(tracks){
   })
 }
 
-export function checkForChangedTrack(active, response) {
-  const { current_track } = response.track_window
+export function checkForChangedTrack(active, {track_window, duration, paused, position}) {
+  const { current_track } = track_window
+
+
 
   if(current_track.uri !== active.uri
     && current_track.linked_from_uri !== active.uri
     && current_track.name !== active.name
-    && response.duration !== 0
-    && (response.paused !== true || response.position !== 0 )
+    && duration !== 0
+    && (paused !== true || position !== 0 )
   ){
       return true
   }
@@ -35,14 +37,26 @@ export function checkForChangedTrack(active, response) {
   return false
 }
 
-export function checkForPlaylistEnd (response) {
-  if(response.paused === true
-    && response.track_window.next_tracks.length === 0
-    && response.position === 0
-    && response.disallows.resuming === true
+export function checkForPlaylistEnd ({ paused, track_window, position, disallows }) {
+
+  if(paused === true
+    && track_window.next_tracks.length === 0
+    && position === 0
+    && disallows.resuming === true
   ){
     return true
   }
 
+  return false
+}
+
+export function checkForPlaylistRestart ({paused, position, track_window}) {
+  if(
+    paused === true
+    && position === 0
+    && track_window.previous_tracks.length === 0
+  ){
+    return true
+  }
   return false
 }

@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import ChoosePlaylist from '../ChoosePlaylist/ChoosePlaylist'
 import GameView from '../GameView/GameView'
+import Header from '../Header/Header'
 import { connectPlayer, renderPlayer, fetchTokenSwitch, fetchClearTracks } from '../../utils/api'
-import { checkForChangedTrack, checkForPlaylistEnd } from '../../utils/helpers'
+import { checkForChangedTrack, checkForPlaylistEnd, checkForPlaylistRestart } from '../../utils/helpers'
 import { setDeviceId } from '../../actions/user'
 import { nextTrack, clearTracksAndArt } from '../../actions/shared'
 
@@ -22,13 +23,10 @@ class Dashboard extends Component {
 
     if(!active){ return }
 
-    console.log(response)
-    if(checkForPlaylistEnd(response)){
-      console.log('in end of playlist',response)
+    if(checkForPlaylistEnd(response) || checkForPlaylistRestart(response)){
       this.props.dispatch(clearTracksAndArt())
       fetchClearTracks(this.props.accessToken, this.props.deviceId)
     }else if(checkForChangedTrack(active, response)){
-      console.log('in changed track',response)
       dispatch(nextTrack())
     }
   }
@@ -36,11 +34,17 @@ class Dashboard extends Component {
   render () {
     const { allPlaylists, tracks, artwork } = this.props
     return (
-      !allPlaylists.length
-        ? <div>Zero Public Playlists</div>
-        : !Object.keys(tracks.tracks).length || !artwork.length
-            ?<ChoosePlaylist />
-            :<GameView />
+      <div>
+        <Header />
+        {
+          !allPlaylists.length
+            ? <div>Zero Public Playlists</div>
+            : !Object.keys(tracks.tracks).length || !artwork.length
+                ?<ChoosePlaylist />
+                :<GameView />
+        }
+      </div>
+
     )
   }
 }
@@ -48,7 +52,7 @@ class Dashboard extends Component {
 function mapStateToProps ({ allPlaylists, tracks, artwork, user }) {
   const allTracks = tracks.tracks
   const active = allTracks.length ? allTracks[tracks.active] : null
-  console.log()
+
   return {
     allPlaylists,
     tracks,
