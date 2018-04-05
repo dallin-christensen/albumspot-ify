@@ -136,3 +136,15 @@ export function fetchClearTracks (token, device_id) {
     },
   })
 }
+
+// export function fetchTokenSwitch (token, cb) {
+//   fetch('https://accounts.spotify.com/api/token', {
+//     method: 'PUT',
+//     body: 'client_credentials',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       'Authorization': `Bearer ${token}`
+//     },
+//   }).then((response) => response.json())
+//   .then((newToken) => cb(newToken))
+// }

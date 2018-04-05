@@ -3,9 +3,6 @@ import { connect } from 'react-redux'
 import { isAuthed } from '../../actions/user'
 
 class Login extends Component {
-  componentDidMount () {
-    //do auth stuff
-  }
   authenticate = (e) => {
     e.preventDefault()
 

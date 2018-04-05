@@ -5,7 +5,8 @@ export default function user (state = {}, action) {
     case SET_ACCESS_TOKEN:
       return {
         ...state,
-        accessToken: action.accessToken
+        accessToken: action.accessToken,
+        tokenTimestamp: Date.now(),
       }
 
     case SET_USER:

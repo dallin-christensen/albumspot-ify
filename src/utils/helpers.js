@@ -26,8 +26,22 @@ export function checkForChangedTrack(active, response) {
   if(current_track.uri !== active.uri
     && current_track.linked_from_uri !== active.uri
     && current_track.name !== active.name
-    && response.duration !== 0){
+    && response.duration !== 0
+    && (response.paused !== true || response.position !== 0 )
+  ){
       return true
+  }
+
+  return false
+}
+
+export function checkForPlaylistEnd (response) {
+  if(response.paused === true
+    && response.track_window.next_tracks.length === 0
+    && response.position === 0
+    && response.disallows.resuming === true
+  ){
+    return true
   }
 
   return false

@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import ChoosePlaylist from '../ChoosePlaylist/ChoosePlaylist'
 import GameView from '../GameView/GameView'
-import { connectPlayer, renderPlayer } from '../../utils/api'
-import { checkForChangedTrack } from '../../utils/helpers'
+import { connectPlayer, renderPlayer, fetchTokenSwitch, fetchClearTracks } from '../../utils/api'
+import { checkForChangedTrack, checkForPlaylistEnd } from '../../utils/helpers'
 import { setDeviceId } from '../../actions/user'
-import { nextTrack } from '../../actions/shared'
+import { nextTrack, clearTracksAndArt } from '../../actions/shared'
 
 class Dashboard extends Component {
   componentDidMount () {
@@ -20,7 +20,15 @@ class Dashboard extends Component {
   listenForNextTrack = (response) => {
     const { dispatch, active } = this.props
 
-    if(checkForChangedTrack(active, response)){
+    if(!active){ return }
+
+    console.log(response)
+    if(checkForPlaylistEnd(response)){
+      console.log('in end of playlist',response)
+      this.props.dispatch(clearTracksAndArt())
+      fetchClearTracks(this.props.accessToken, this.props.deviceId)
+    }else if(checkForChangedTrack(active, response)){
+      console.log('in changed track',response)
       dispatch(nextTrack())
     }
   }
@@ -30,7 +38,7 @@ class Dashboard extends Component {
     return (
       !allPlaylists.length
         ? <div>Zero Public Playlists</div>
-        : !Object.keys(tracks).length || !artwork.length
+        : !Object.keys(tracks.tracks).length || !artwork.length
             ?<ChoosePlaylist />
             :<GameView />
     )
@@ -40,11 +48,14 @@ class Dashboard extends Component {
 function mapStateToProps ({ allPlaylists, tracks, artwork, user }) {
   const allTracks = tracks.tracks
   const active = allTracks.length ? allTracks[tracks.active] : null
+  console.log()
   return {
     allPlaylists,
     tracks,
     artwork: artwork.all,
     accessToken: user.accessToken,
+    deviceId: user.deviceId,
+    tokenTimestamp: user.tokenTimestamp,
     active,
   }
 }
