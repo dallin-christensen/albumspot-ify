@@ -44,13 +44,20 @@
   margin-left: 2px;
 }
 
-
 .player_skip {
   display: inline-block;
   font-size: 30px;
   vertical-align: middle;
   padding: 0px 5px 5px 5px;
   cursor: pointer;
+}
+
+.player_skip_inactive {
+  display: inline-block;
+  font-size: 30px;
+  vertical-align: middle;
+  padding: 0px 5px 5px 5px;
+  color: #aaa;
 }
 
 .player_skip:active {

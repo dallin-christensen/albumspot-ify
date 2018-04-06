@@ -4,4 +4,43 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
+  color: #fff;
+  align-items: center;
+  cursor: pointer;
+}
+
+.header_logo_container {
+  display: inline-block;
+}
+
+.header_title_container {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.header_title_container:hover .header_logo {
+  transform: rotate(1turn) scale(1.1);
+}
+
+.header_title {
+  display: inline-block;
+  font-size: 25px;
+}
+
+.header_logo {
+  width: 50px;
+  transition: all .3s ease-in-out;
+}
+
+.header_logo:hover {
+  transform: rotate(1turn) scale(1.1);
+}
+
+.header_score_container {
+  padding: 2px 10px;
+  border: 1px solid #fff;
+  /* background-color: #1db954; */
+  border-radius: 20px;
+  font-size: 20px;
 }

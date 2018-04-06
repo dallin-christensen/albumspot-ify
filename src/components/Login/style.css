@@ -1,0 +1,60 @@
+.login_container {
+  padding: 100px 0;
+  color: #fff;
+  margin-bottom: 50px;
+}
+
+.login_toptext_container {
+  font-size: 50px;
+  margin-bottom: 50px;
+}
+
+.login_logo_container{
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.login_logo {
+  width: 200px;
+}
+
+.login_logo_text {
+  padding-left: 10px;
+  font-size: 100px;
+}
+
+.login_overview_container {
+  font-size: 25px;
+  margin-bottom: 50px;
+}
+
+.login_button{
+  font-size: 25px;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 30px;
+  background-color: #fff;
+  color: #1db954;
+  cursor: pointer;
+  transition: all .1s ease-in-out;
+  margin-top: 1px;
+}
+
+.login_button:hover {
+  padding: 11px 32px;
+  margin-top: 0;
+  font-size: 26px;
+  box-shadow: 10px 10px 30px #434;
+}
+
+.login_button:active {
+  font-size: 25px;
+  margin-top:1px;
+  padding: 10px 30px;
+  box-shadow: 5px 5px 15px #434;
+}
+
+.login_button:focus {outline:0;}

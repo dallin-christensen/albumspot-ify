@@ -2,9 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { shuffle } from '../../utils/utils' //TODO:may need to get rid of
 import Player from '../Player/Player'
-import { clearTracksAndArt } from '../../actions/shared'
 import { guess } from '../../actions/game'
-import { fetchClearTracks } from '../../utils/api'
 import { IoIosCheckmarkOutline, IoIosCloseOutline } from 'react-icons/lib/io'
 import './style.css'
 import './tile.css'
@@ -85,17 +83,11 @@ class GameView extends Component {
     return shuffle(wrongs.concat(active))
   }
 
-  clearTracksAndArt = () => {
-    this.props.dispatch(clearTracksAndArt())
-    fetchClearTracks(this.props.accessToken, this.props.deviceId)
-  }
-
   render(){
     const { activeTrack } = this.props
     return(
       <div>
         <div>
-          <span onClick={this.clearTracksAndArt}>back</span>
           <div className='art_container'>
             {this.shufflePicutres().map((img, i) =>{
               const isCorrect = activeTrack.img === img
@@ -116,11 +108,11 @@ class GameView extends Component {
 function mapStateToProps ({ tracks, artwork, user }) {
   const activeTrack = tracks.tracks[tracks.active]
   const { wrongArtwork } = artwork
+  const { deviceId } = user
   return {
     activeTrack,
     wrongArtwork,
-    deviceId: user.deviceId,
-    accessToken: user.accessToken
+    deviceId,
   }
 }
 

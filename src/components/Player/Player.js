@@ -61,8 +61,9 @@ class Player extends Component {
                 : <FaPause /> }
             </div>
           </div>
-          <div className='player_skip' onClick={this.nextTrack}>
-            <MdSkipNext />
+          <div
+            className={this.props.hasGuessed ? 'player_skip' : 'player_skip_inactive'} onClick={this.props.hasGuessed ? this.nextTrack : undefined}>
+              <MdSkipNext />
           </div>
         </div>
 
@@ -83,14 +84,15 @@ class Player extends Component {
   }
 }
 
-function mapStateToProps({ user, tracks }){
+function mapStateToProps({ user, tracks, game }){
   const allTracks = tracks.tracks
   const activeUri = allTracks[tracks.active].uri
   return {
     tracks: allTracks,
     token: user.accessToken,
     deviceId: user.deviceId,
-    activeUri
+    activeUri,
+    hasGuessed: game.hasGuessed,
   }
 }
 

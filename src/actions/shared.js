@@ -69,12 +69,8 @@ export function nextTrack () {
 export function clearTracksAndArt () {
   return (dispatch) => {
     dispatch(setTracks([]))
-    console.log('cleared tracks')
     dispatch(activeStartOver())
-    console.log('cleared active')
     dispatch(setArtwork([]))
-    console.log('cleared artwork')
     dispatch(clearGame())
-    console.log('cleared game')
   }
 }

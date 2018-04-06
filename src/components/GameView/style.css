@@ -1,5 +1,5 @@
 .art_container {
-  margin: 50px auto;
+  margin: 20px auto 50px auto;
   display: flex;
   flex-flow: row wrap;
   width: 600px;
@@ -10,4 +10,5 @@
   color: white;
   display: inline-block;
   margin: 10px;
+  cursor: pointer;
 }
