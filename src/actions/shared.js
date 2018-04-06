@@ -1,4 +1,4 @@
-import { setUser } from './user'
+import { setUser, loading, notLoading } from './user'
 import { setAllPlaylists } from './allPlaylists'
 import { fetchUserAndPlaylists, fetchPlaylist } from '../utils/api'
 import { setPlaylist } from './playlist'
@@ -16,6 +16,7 @@ export function handleInitialData () {
     const dispatchValues = (values) => {
       dispatch(setUser(values[0]))
       dispatch(setAllPlaylists(values[1].items))
+      dispatch(notLoading())
     }
 
     fetchUserAndPlaylists(accessToken, dispatchValues)
@@ -24,6 +25,7 @@ export function handleInitialData () {
 
 export function handleGetPlaylist (href) {
   return (dispatch, getState) => {
+    // dispatch(loading()) //TODO debug why this makes nextTrack not work
     const accessToken = getState().user.accessToken
 
     const dispatchPlaylists = (playlist) => {
@@ -31,6 +33,7 @@ export function handleGetPlaylist (href) {
       dispatch(setTracks(shuffle(formatTracks(playlist))))
       dispatch(setArtwork(formatArtwork(playlist.tracks)))
       dispatch(createWrongArtwork())
+      // dispatch(notLoading()) //TODO debug why this makes nextTrack not work
     }
 
     fetchPlaylist(accessToken, href, dispatchPlaylists)

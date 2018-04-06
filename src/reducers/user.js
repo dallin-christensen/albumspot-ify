@@ -1,6 +1,13 @@
-import { SET_USER, REMOVE_USER, SET_ACCESS_TOKEN, SET_DEVICE_ID } from '../actions/user'
+import {
+  SET_USER, REMOVE_USER, SET_ACCESS_TOKEN,
+  SET_DEVICE_ID, LOADING, NOT_LOADING
+} from '../actions/user'
 
-export default function user (state = {}, action) {
+const defaultState = {
+  loading: false,
+}
+
+export default function user (state = defaultState, action) {
   switch (action.type) {
     case SET_ACCESS_TOKEN:
       return {
@@ -20,6 +27,18 @@ export default function user (state = {}, action) {
       return {
         ...state,
         deviceId: action.deviceId
+      }
+
+    case LOADING:
+      return {
+        ...state,
+        loading: true
+      }
+
+    case NOT_LOADING:
+      return {
+        ...state,
+        loading: false
       }
 
     default:

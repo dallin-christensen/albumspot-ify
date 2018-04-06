@@ -1,0 +1,29 @@
+.loading_container {
+  padding-top: 120px;
+}
+
+.loading_image {
+  width: 150px;
+  margin-top: 5px;
+  animation: spinbackwards 5s linear infinite;
+}
+
+.loading_circle {
+  border: 10px solid #fff; /* Light grey */
+  border-top: 10px solid #1db954;
+  border-radius: 50%;
+  width: 160px;
+  height: 160px;
+  animation: spin 2s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes spinbackwards {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(-360deg); }
+}

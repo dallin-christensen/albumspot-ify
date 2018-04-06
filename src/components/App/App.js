@@ -4,6 +4,7 @@ import queryString from 'query-string'
 import { setAccessToken } from '../../actions/user'
 import Login from '../Login/Login'
 import Dashboard from '../Dashboard/Dashboard'
+import Loading from '../Loading/Loading'
 import { handleInitialData } from '../../actions/shared'
 import './style.css'
 
@@ -19,18 +20,23 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {!this.props.accessToken
-            ?<Login />
-            :<Dashboard />
+        {
+          this.props.loading
+            ? <Loading />
+            : !this.props.accessToken
+                ?<Login />
+                :<Dashboard />
         }
       </div>
     );
   }
 }
 
-function mapStateToProps (state) {
+function mapStateToProps ({ user }) {
+  const { accessToken, loading } = user
   return {
-    accessToken: state.user.accessToken
+    accessToken,
+    loading,
   }
 }
 

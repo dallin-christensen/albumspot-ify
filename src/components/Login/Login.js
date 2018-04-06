@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { isAuthed } from '../../actions/user'
+import { isAuthed, loading } from '../../actions/user'
 import './style.css'
 import logo_lg from '../../images/spotartify_200.png'
 
 class Login extends Component {
   authenticate = (e) => {
     e.preventDefault()
+
+    this.props.dispatch(loading())
 
     window.location = 'https://spotify-game-backend.herokuapp.com/login'
   }
