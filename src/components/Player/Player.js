@@ -4,6 +4,7 @@ import './style.css'
 import { fetchPlayTracks, fetchPause, fetchUnpause, fetchNext, fetchVolume } from '../../utils/api'
 import { formatFetchAllTracks } from '../../utils/helpers'
 import { nextTrack } from '../../actions/shared'
+import { resetGuess } from '../../actions/game'
 import { FaPlay, FaPause } from 'react-icons/lib/fa'
 import { MdSkipNext, MdVolumeUp } from 'react-icons/lib/md'
 import Slider from 'react-rangeslider'
@@ -15,7 +16,8 @@ class Player extends Component {
     super(props)
     this.state = {
       paused: false,
-      volume: 50
+      volume: 50,
+      nextIsAvailable: !this.props.hasGuessed,
     }
   }
 
@@ -38,8 +40,9 @@ class Player extends Component {
     })
   }
 
-  nextTrack = () => {
+  nextTrack = (e) => {
     const { token } = this.props
+    this.props.dispatch(resetGuess())
     fetchNext(token)
     this.setState({
       paused: false,

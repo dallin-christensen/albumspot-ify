@@ -61,7 +61,6 @@ export function createWrongArtwork () {
 
 export function nextTrack () {
   return (dispatch) => {
-    dispatch(resetGuess())
     dispatch(nextTrackActive())
     dispatch(createWrongArtwork())
   }
