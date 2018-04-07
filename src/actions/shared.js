@@ -2,7 +2,7 @@ import { setUser, loading, notLoading, error } from './user'
 import { setAllPlaylists } from './allPlaylists'
 import { fetchUserAndPlaylists, fetchPlaylist } from '../utils/api'
 import { setPlaylist } from './playlist'
-import { formatTracks, formatArtwork } from '../utils/helpers'
+import { formatTracks, formatArtwork, enoughTracks, enoughArt } from '../utils/helpers'
 import { setTracks } from './tracks'
 import { setArtwork, setWrongArtwork } from './artwork'
 import { shuffle } from '../utils/utils'
@@ -32,10 +32,22 @@ export function handleGetPlaylist (href) {
     const accessToken = getState().user.accessToken
 
     const dispatchPlaylists = (playlist) => {
-      dispatch(setPlaylist(playlist))
-      dispatch(setTracks(shuffle(formatTracks(playlist))))
-      dispatch(setArtwork(formatArtwork(playlist.tracks)))
-      dispatch(createWrongArtwork())
+      if(!enoughTracks(playlist)){
+        dispatch(error(
+          'This playlist does not have enough tracks to play SpotArtify. Add more tracks or select a different playlist :)',
+          'Unable to play playlist'
+        ))
+      } else if (!enoughArt(playlist)) {
+        dispatch(error(
+          'This playlist does not have enough different album art to play SpotArtify. You need at least four songs with seperate artwork to play. Add more tracks or select a different playlist :)',
+          'Unable to play playlist'
+        ))
+      } else {
+        dispatch(setPlaylist(playlist))
+        dispatch(setTracks(shuffle(formatTracks(playlist))))
+        dispatch(setArtwork(formatArtwork(playlist.tracks)))
+        dispatch(createWrongArtwork())
+      }
     }
 
     const errorCb = (msg) => {
@@ -69,6 +81,7 @@ export function createWrongArtwork () {
 
 export function nextTrack () {
   return (dispatch) => {
+    dispatch(resetGuess())
     dispatch(nextTrackActive())
     dispatch(createWrongArtwork())
   }

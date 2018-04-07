@@ -1,3 +1,19 @@
+export function enoughTracks ({ tracks }) {
+  return tracks.items.length >= 4 ? true : false
+}
+
+export function enoughArt ({ tracks }) {
+  let artworkUrls = []
+  tracks.items.map((trackData) => {
+    let { url } = trackData.track.album.images[1]
+    if(!artworkUrls.includes(url)){
+      artworkUrls.push(url)
+    }
+  })
+
+  return artworkUrls.length >= 4 ? true : false
+}
+
 export function formatTracks ({ tracks }) {
   return tracks.items.map((trackData) => {
     return {

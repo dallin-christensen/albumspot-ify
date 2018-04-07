@@ -65,10 +65,11 @@ class ArtOption extends Component {
 }
 
 function mapArtOptionStateToProps ({ game }) {
-  const { hasGuessed, correct } = game
+  const { hasGuessed, correct, nextIsAvailable } = game
   return {
     hasGuessed,
     correct,
+    nextIsAvailable,
   }
 }
 

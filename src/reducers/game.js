@@ -1,9 +1,10 @@
-import { GUESS, RESET_GUESS, CLEAR_GAME } from '../actions/game'
+import { GUESS, RESET_GUESS, CLEAR_GAME, NEXT_NOT_AVAILABLE } from '../actions/game'
 
 const defaultState = {
   hasGuessed: false,
   correct: false,
   score: 0,
+  nextIsAvailable: false,
 }
 
 export default function user (state = defaultState, action) {
@@ -14,6 +15,7 @@ export default function user (state = defaultState, action) {
         hasGuessed: true,
         correct: action.correct,
         score: action.correct ? state.score + 1 : state.score,
+        nextIsAvailable: true
       }
 
     case RESET_GUESS:
@@ -30,6 +32,12 @@ export default function user (state = defaultState, action) {
         correct: false,
         score: 0,
       }
+
+      case NEXT_NOT_AVAILABLE:
+        return {
+          ...state,
+          nextIsAvailable: false,
+        }
 
     default:
       return state

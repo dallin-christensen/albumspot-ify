@@ -4,8 +4,8 @@ import './style.css'
 import { fetchPlayTracks, fetchPause, fetchUnpause, fetchNext, fetchVolume } from '../../utils/api'
 import { formatFetchAllTracks } from '../../utils/helpers'
 import { nextTrack } from '../../actions/shared'
-import { resetGuess } from '../../actions/game'
 import { error } from '../../actions/user'
+import { nextNotAvailable } from '../../actions/game'
 import { FaPlay, FaPause } from 'react-icons/lib/fa'
 import { MdSkipNext, MdVolumeUp } from 'react-icons/lib/md'
 import Slider from 'react-rangeslider'
@@ -43,7 +43,7 @@ class Player extends Component {
 
   nextTrack = (e) => {
     const { token } = this.props
-    this.props.dispatch(resetGuess())
+    this.props.dispatch(nextNotAvailable())
     fetchNext(token, this.invokeError)
     this.setState({
       paused: false,
@@ -73,7 +73,7 @@ class Player extends Component {
             </div>
           </div>
           <div
-            className={this.props.hasGuessed ? 'player_skip' : 'player_skip_inactive'} onClick={this.props.hasGuessed ? this.nextTrack : undefined}>
+            className={this.props.nextIsAvailable ? 'player_skip' : 'player_skip_inactive'} onClick={this.props.nextIsAvailable ? this.nextTrack : undefined}>
               <MdSkipNext />
           </div>
         </div>
@@ -98,12 +98,14 @@ class Player extends Component {
 function mapStateToProps({ user, tracks, game }){
   const allTracks = tracks.tracks
   const activeUri = allTracks[tracks.active].uri
+  const { hasGuessed, nextIsAvailable } = game
   return {
     tracks: allTracks,
     token: user.accessToken,
     deviceId: user.deviceId,
     activeUri,
-    hasGuessed: game.hasGuessed,
+    hasGuessed,
+    nextIsAvailable
   }
 }
 
