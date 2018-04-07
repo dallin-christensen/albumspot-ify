@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import ChoosePlaylist from '../ChoosePlaylist/ChoosePlaylist'
 import GameView from '../GameView/GameView'
 import Header from '../Header/Header'
+import SpotArtifyModal from '../Modal/SpotArtifyModal'
 import { connectPlayer, renderPlayer, fetchTokenSwitch, fetchClearTracks } from '../../utils/api'
 import { checkForChangedTrack, checkForPlaylistEnd, checkForPlaylistRestart } from '../../utils/helpers'
 import { setDeviceId } from '../../actions/user'
@@ -56,11 +57,16 @@ class Dashboard extends Component {
       <div>
         <Header />
         {
-          !allPlaylists.length
-            ? <CNoPlaylists />
-            : !Object.keys(tracks.tracks).length || !artwork.length
-                ?<ChoosePlaylist />
-                :<GameView />
+          <div>
+            {
+              !allPlaylists.length
+                ? <CNoPlaylists />
+                : !Object.keys(tracks.tracks).length || !artwork.length
+                    ?<ChoosePlaylist />
+                    :<GameView />
+            }
+            <SpotArtifyModal />
+          </div>
         }
       </div>
 

@@ -4,6 +4,8 @@ export const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN'
 export const SET_DEVICE_ID = 'SET_DEVICE_ID'
 export const LOADING = 'LOADING'
 export const NOT_LOADING = 'NOT_LOADING'
+export const ERROR = 'ERROR'
+export const CLEAR_ERROR = 'CLEAR_ERROR'
 
 export function setUser (user) {
   return {
@@ -35,5 +37,19 @@ export function loading () {
 export function notLoading () {
   return {
     type: NOT_LOADING
+  }
+}
+
+export function error (msg, header) {
+  return {
+    type: ERROR,
+    msg,
+    header,
+  }
+}
+
+export function clearError () {
+  return {
+    type: CLEAR_ERROR
   }
 }

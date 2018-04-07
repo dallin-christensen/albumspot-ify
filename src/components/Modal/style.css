@@ -1,0 +1,17 @@
+.ReactModal__Content {
+  color: #333;
+}
+
+.modal_titleBar {
+  background-color: #1db954;
+  color: #fff;
+  padding: 7px 7px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  margin:-20px -20px 0 -20px;
+}
+
+.modal_content {
+  padding: 20px 0;
+}

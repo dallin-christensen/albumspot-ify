@@ -1,10 +1,33 @@
 import {
   SET_USER, REMOVE_USER, SET_ACCESS_TOKEN,
-  SET_DEVICE_ID, LOADING, NOT_LOADING
+  SET_DEVICE_ID, LOADING, NOT_LOADING, ERROR, CLEAR_ERROR
 } from '../actions/user'
+
+const defaultError ={
+  msg: '',
+  header: '',
+}
 
 const defaultState = {
   loading: false,
+  error: defaultError,
+}
+
+function error(state, action) {
+  switch (action.type) {
+    case ERROR:
+      return {
+        ...state,
+        msg: action.msg,
+        header: action.header,
+      }
+
+    case CLEAR_ERROR:
+      return defaultError
+
+    default:
+      return state
+  }
 }
 
 export default function user (state = defaultState, action) {
@@ -39,6 +62,18 @@ export default function user (state = defaultState, action) {
       return {
         ...state,
         loading: false
+      }
+
+    case ERROR:
+      return {
+        ...state,
+        error: error(state.error, action),
+      }
+
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: error(state.error, action),
       }
 
     default:

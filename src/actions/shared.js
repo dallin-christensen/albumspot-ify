@@ -1,4 +1,4 @@
-import { setUser, loading, notLoading } from './user'
+import { setUser, loading, notLoading, error } from './user'
 import { setAllPlaylists } from './allPlaylists'
 import { fetchUserAndPlaylists, fetchPlaylist } from '../utils/api'
 import { setPlaylist } from './playlist'
@@ -15,7 +15,7 @@ export function handleInitialData () {
 
     const dispatchValues = (values) => {
       dispatch(setUser(values[0]))
-      dispatch(setAllPlaylists(values[1].items))
+      dispatch(setAllPlaylists(values[1].items)) //TODO:this is where errors on old token
       dispatch(notLoading())
     }
 
