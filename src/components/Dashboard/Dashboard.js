@@ -7,6 +7,25 @@ import { connectPlayer, renderPlayer, fetchTokenSwitch, fetchClearTracks } from 
 import { checkForChangedTrack, checkForPlaylistEnd, checkForPlaylistRestart } from '../../utils/helpers'
 import { setDeviceId } from '../../actions/user'
 import { nextTrack, clearTracksAndArt } from '../../actions/shared'
+import './style.css'
+
+function NoPlaylists (props) {
+  return (
+    <div>
+      <div className='user_greeting'>
+        Welcome {props.name}!
+      </div>
+      <div className='noplaylists_text'>
+        <p>Uh oh, it appears you don't have any publicly accessable playlists!</p>
+        <p>If you would like to continue, follow or create a Spotify playlist and set it to 'Public'.</p>
+        <p>Then simply refresh this page!</p>
+      </div>
+    </div>
+  )
+}
+const CNoPlaylists = connect((state) => ({
+  name: state.user[state.user.userID].display_name
+}))(NoPlaylists)
 
 class Dashboard extends Component {
   componentDidMount () {
@@ -38,7 +57,7 @@ class Dashboard extends Component {
         <Header />
         {
           !allPlaylists.length
-            ? <div>Zero Public Playlists</div>
+            ? <CNoPlaylists />
             : !Object.keys(tracks.tracks).length || !artwork.length
                 ?<ChoosePlaylist />
                 :<GameView />

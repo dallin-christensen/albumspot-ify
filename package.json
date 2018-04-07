@@ -11,7 +11,8 @@
     "react-scripts": "1.1.1",
     "react-slider": "^0.11.2",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "webfontloader": "^1.6.28"
   },
   "scripts": {
     "start": "react-scripts start",

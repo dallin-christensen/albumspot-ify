@@ -25,7 +25,6 @@ export function handleInitialData () {
 
 export function handleGetPlaylist (href) {
   return (dispatch, getState) => {
-    // dispatch(loading()) //TODO debug why this makes nextTrack not work
     const accessToken = getState().user.accessToken
 
     const dispatchPlaylists = (playlist) => {
@@ -33,7 +32,6 @@ export function handleGetPlaylist (href) {
       dispatch(setTracks(shuffle(formatTracks(playlist))))
       dispatch(setArtwork(formatArtwork(playlist.tracks)))
       dispatch(createWrongArtwork())
-      // dispatch(notLoading()) //TODO debug why this makes nextTrack not work
     }
 
     fetchPlaylist(accessToken, href, dispatchPlaylists)

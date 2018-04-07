@@ -18,14 +18,15 @@ class App extends Component {
     }
   }
   render() {
+    const { loading, accessToken, userID } = this.props
     return (
       <div className="App">
         {
-          this.props.loading
+          loading
             ? <Loading />
-            : !this.props.accessToken
-                ?<Login />
-                :<Dashboard />
+            : accessToken && userID
+                ?<Dashboard />
+                :<Login />
         }
       </div>
     );
@@ -33,10 +34,11 @@ class App extends Component {
 }
 
 function mapStateToProps ({ user }) {
-  const { accessToken, loading } = user
+  const { accessToken, loading, userID } = user
   return {
     accessToken,
     loading,
+    userID,
   }
 }
 

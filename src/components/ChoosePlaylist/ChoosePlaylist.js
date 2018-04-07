@@ -10,7 +10,7 @@ class ChoosePlaylist extends Component {
     const { allPlaylists } = this.props
     return (
       <div>
-        <h1 className='user_greeting'>Wecome, {this.props.userName} !</h1>
+        <h1 className='user_greeting'>Wecome, {this.props.userName}!</h1>
         <p className='user_instructions'>
           Select a playlist to get started!&nbsp;
           {<span className='arrows'><IoAndroidArrowDown /><IoAndroidArrowDown /><IoAndroidArrowDown /></span>}
