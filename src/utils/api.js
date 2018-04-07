@@ -1,33 +1,30 @@
 import { formatFetchAllTracks } from './helpers'
 
-export function fetchUserAndPlaylists (accessToken, cb) {
+export function fetchUserAndPlaylists (accessToken, cb, errorCb) {
   const getUserPromise = fetch('https://api.spotify.com/v1/me', {
     headers: { 'Authorization': 'Bearer ' + accessToken }
   }).then((response) => response.json())
+  .catch(() => errorCb('Could not retrieve user data'))
 
   //fetch playlists
   const getPlaylistPromise = fetch('https://api.spotify.com/v1/me/playlists', {
     headers: { 'Authorization': 'Bearer ' + accessToken }
   }).then((response) => response.json())
+  .catch(() => errorCb('Could not retrieve user playlist data'))
 
   Promise.all([getUserPromise, getPlaylistPromise])
   .then((values) => cb(values))
+  .catch(() => errorCb('Could not retrieve user data'))
 }
 
-export function fetchPlaylist (accessToken, href, cb) {
+export function fetchPlaylist (accessToken, href, cb, errorCb) {
   fetch(href, {
     headers: { 'Authorization': 'Bearer ' + accessToken }
   }).then((response) => response.json())
   .then((playlist) => {
     cb(playlist)
   })
-}
-
-export function fetchTrackData (accessToken, href, cb) {
-  fetch(href, {
-    headers: { 'Authorization': 'Bearer ' + accessToken }
-  }).then((response) => response.json())
-  .then((tracks) => cb(tracks))
+  .catch(() => errorCb('Could not retrieve playlist data'))
 }
 
 export function renderPlayer() {
@@ -75,7 +72,7 @@ export function disconnectPlayer(){
   player.disconnect();
 }
 
-export function fetchPlayTracks(token, device_id, tracks){
+export function fetchPlayTracks(token, device_id, tracks, errorCb){
   fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device_id}`, {
     method: 'PUT',
     body: JSON.stringify({ uris: tracks }),
@@ -83,50 +80,50 @@ export function fetchPlayTracks(token, device_id, tracks){
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
-  })
+  }).catch(() => errorCb('Cannot play track'))
 }
 
-export function fetchPause(token) {
+export function fetchPause(token, errorCb) {
   fetch('https://api.spotify.com/v1/me/player/pause', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
-  })
+  }).catch(() => errorCb('Cannot pause track'))
 }
 
-export function fetchUnpause (token) {
+export function fetchUnpause (token, errorCb) {
   fetch('https://api.spotify.com/v1/me/player/play', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
-  })
+  }).catch(() => errorCb('Cannot play track'))
 }
 
-export function fetchNext (token) {
+export function fetchNext (token, errorCb) {
   fetch('https://api.spotify.com/v1/me/player/next', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
-  })
+  }).catch(() => errorCb('Cannot skip track'))
 }
 
-export function fetchVolume (token, percent) {
+export function fetchVolume (token, percent, errorCb) {
   fetch(`https://api.spotify.com/v1/me/player/volume?volume_percent=${percent}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
-  })
+  }).catch(() => errorCb('Cannot adjust volume'))
 }
 
-export function fetchClearTracks (token, device_id) {
+export function fetchClearTracks (token, device_id, errorCb) {
   fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device_id}`, {
     method: 'PUT',
     body: JSON.stringify({ uris: [] }),
@@ -134,7 +131,7 @@ export function fetchClearTracks (token, device_id) {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
-  })
+  }).catch(() => errorCb('Could not clear tracks in playlist'))
 }
 
 // export function fetchTokenSwitch (token, cb) {

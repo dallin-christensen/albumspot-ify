@@ -25,7 +25,7 @@ class SpotArtifyModal extends Component {
     const { msg, header } = this.props
     return (
       <Modal
-        isOpen={msg}
+        isOpen={!!msg}
         style={customStyles}
       >
         <div className='modal_titleBar'>

@@ -19,7 +19,11 @@ export function handleInitialData () {
       dispatch(notLoading())
     }
 
-    fetchUserAndPlaylists(accessToken, dispatchValues)
+    const errorCb = (msg) => {
+      dispatch(error(msg, 'Warning'))
+    }
+
+    fetchUserAndPlaylists(accessToken, dispatchValues, errorCb)
   }
 }
 
@@ -34,7 +38,11 @@ export function handleGetPlaylist (href) {
       dispatch(createWrongArtwork())
     }
 
-    fetchPlaylist(accessToken, href, dispatchPlaylists)
+    const errorCb = (msg) => {
+      dispatch(error(msg, 'Warning'))
+    }
+
+    fetchPlaylist(accessToken, href, dispatchPlaylists, errorCb)
   }
 }
 

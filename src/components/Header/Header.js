@@ -3,12 +3,16 @@ import { connect } from 'react-redux'
 import './style.css'
 import { fetchClearTracks } from '../../utils/api'
 import { clearTracksAndArt } from '../../actions/shared'
+import { error } from '../../actions/user'
 import logo_sm from '../../images/spotartify_50.png'
 
 class Header extends Component {
   clearTracksAndArt = () => {
     this.props.dispatch(clearTracksAndArt())
-    fetchClearTracks(this.props.accessToken, this.props.deviceId)
+    fetchClearTracks(this.props.accessToken, this.props.deviceId, this.invokeError)
+  }
+  invokeError = (msg) => {
+    this.props.dispach(error(msg, 'Warning'))
   }
   render () {
     const { inGameview } = this.props

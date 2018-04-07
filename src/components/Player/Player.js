@@ -5,6 +5,7 @@ import { fetchPlayTracks, fetchPause, fetchUnpause, fetchNext, fetchVolume } fro
 import { formatFetchAllTracks } from '../../utils/helpers'
 import { nextTrack } from '../../actions/shared'
 import { resetGuess } from '../../actions/game'
+import { error } from '../../actions/user'
 import { FaPlay, FaPause } from 'react-icons/lib/fa'
 import { MdSkipNext, MdVolumeUp } from 'react-icons/lib/md'
 import Slider from 'react-rangeslider'
@@ -23,16 +24,16 @@ class Player extends Component {
 
   componentDidMount(){
     const { token, deviceId, tracks } = this.props
-    fetchPlayTracks(token, deviceId, formatFetchAllTracks(tracks))
+    fetchPlayTracks(token, deviceId, formatFetchAllTracks(tracks), this.invokeError)
   }
 
   togglePause = () => {
     const { token } = this.props
 
     if(this.state.paused){
-      fetchUnpause(token)
+      fetchUnpause(token, this.invokeError)
     } else {
-      fetchPause(token)
+      fetchPause(token, this.invokeError)
     }
 
     this.setState({
@@ -43,17 +44,21 @@ class Player extends Component {
   nextTrack = (e) => {
     const { token } = this.props
     this.props.dispatch(resetGuess())
-    fetchNext(token)
+    fetchNext(token, this.invokeError)
     this.setState({
       paused: false,
     })
   }
 
   changeVolume = (value) => {
-    fetchVolume(this.props.token, value)
+    fetchVolume(this.props.token, value, this.invokeError)
     this.setState({
       volume: value
     })
+  }
+
+  invokeError = (msg) => {
+    this.props.dispach(error(msg, 'Warning'))
   }
 
   render () {

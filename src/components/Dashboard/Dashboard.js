@@ -4,9 +4,9 @@ import ChoosePlaylist from '../ChoosePlaylist/ChoosePlaylist'
 import GameView from '../GameView/GameView'
 import Header from '../Header/Header'
 import SpotArtifyModal from '../Modal/SpotArtifyModal'
-import { connectPlayer, renderPlayer, fetchTokenSwitch, fetchClearTracks } from '../../utils/api'
+import { connectPlayer, renderPlayer, fetchClearTracks } from '../../utils/api'
 import { checkForChangedTrack, checkForPlaylistEnd, checkForPlaylistRestart } from '../../utils/helpers'
-import { setDeviceId } from '../../actions/user'
+import { setDeviceId, error } from '../../actions/user'
 import { nextTrack, clearTracksAndArt } from '../../actions/shared'
 import './style.css'
 
@@ -45,10 +45,14 @@ class Dashboard extends Component {
 
     if(checkForPlaylistEnd(response) || checkForPlaylistRestart(response)){
       this.props.dispatch(clearTracksAndArt())
-      fetchClearTracks(this.props.accessToken, this.props.deviceId)
+      fetchClearTracks(this.props.accessToken, this.props.deviceId, this.invokeError)
     }else if(checkForChangedTrack(active, response)){
       dispatch(nextTrack())
     }
+  }
+
+  invokeError = (msg) => {
+    this.props.dispach(error(msg, 'Warning'))
   }
 
   render () {
