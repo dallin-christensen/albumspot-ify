@@ -13,7 +13,9 @@ const customStyles = {
     bottom                : 'auto',
     marginRight           : '-50%',
     transform             : 'translate(-50%, -50%)',
-    borderRadius          : '5px'
+    borderRadius          : '5px',
+    maxWidth              : '350px',
+    border                : 'none',
   }
 };
 

@@ -6,6 +6,7 @@ export const LOADING = 'LOADING'
 export const NOT_LOADING = 'NOT_LOADING'
 export const ERROR = 'ERROR'
 export const CLEAR_ERROR = 'CLEAR_ERROR'
+export const REFRESH_TOKEN = 'REFRESH_TOKEN'
 
 export function setUser (user) {
   return {
@@ -51,5 +52,11 @@ export function error (msg, header) {
 export function clearError () {
   return {
     type: CLEAR_ERROR
+  }
+}
+
+export function refreshToken () {
+  return {
+    type: REFRESH_TOKEN
   }
 }

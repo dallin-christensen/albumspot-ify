@@ -18,6 +18,8 @@ export function formatTracks ({ tracks }) {
   return tracks.items.map((trackData) => {
     return {
       name: trackData.track.name,
+      artist: trackData.track.artists[0].name,
+      album: trackData.track.album.name,
       href: trackData.track.href,
       uri: trackData.track.uri,
       img: trackData.track.album.images[1].url,

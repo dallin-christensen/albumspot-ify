@@ -4,7 +4,7 @@ import './style.css'
 import { fetchPlayTracks, fetchPause, fetchUnpause, fetchNext, fetchVolume } from '../../utils/api'
 import { formatFetchAllTracks } from '../../utils/helpers'
 import { nextTrack } from '../../actions/shared'
-import { error } from '../../actions/user'
+import { error, refreshToken } from '../../actions/user'
 import { nextNotAvailable } from '../../actions/game'
 import { FaPlay, FaPause } from 'react-icons/lib/fa'
 import { MdSkipNext, MdVolumeUp } from 'react-icons/lib/md'
@@ -17,23 +17,23 @@ class Player extends Component {
     super(props)
     this.state = {
       paused: false,
-      volume: 50,
+      volume: 40,
       nextIsAvailable: !this.props.hasGuessed,
     }
   }
 
   componentDidMount(){
     const { token, deviceId, tracks } = this.props
-    fetchPlayTracks(token, deviceId, formatFetchAllTracks(tracks), this.invokeError)
+    fetchPlayTracks(token, deviceId, formatFetchAllTracks(tracks), this.invokeError, this.refreshToken)
   }
 
   togglePause = () => {
     const { token } = this.props
 
     if(this.state.paused){
-      fetchUnpause(token, this.invokeError)
+      fetchUnpause(token, this.invokeError, this.refreshToken)
     } else {
-      fetchPause(token, this.invokeError)
+      fetchPause(token, this.invokeError, this.refreshToken)
     }
 
     this.setState({
@@ -44,21 +44,24 @@ class Player extends Component {
   nextTrack = (e) => {
     const { token } = this.props
     this.props.dispatch(nextNotAvailable())
-    fetchNext(token, this.invokeError)
+    fetchNext(token, this.invokeError, this.refreshToken)
     this.setState({
       paused: false,
     })
   }
 
   changeVolume = (value) => {
-    fetchVolume(this.props.token, value, this.invokeError)
+    fetchVolume(this.props.token, value, this.invokeError, this.refreshToken)
     this.setState({
       volume: value
     })
   }
 
   invokeError = (msg) => {
-    this.props.dispach(error(msg, 'Warning'))
+    this.props.dispatch(error(msg, 'Warning'))
+  }
+  refreshToken = () => {
+    this.props.dispatch(refreshToken())
   }
 
   render () {

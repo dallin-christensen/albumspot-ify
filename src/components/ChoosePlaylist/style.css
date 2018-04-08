@@ -7,18 +7,21 @@
 .user_greeting {
   font-size: 40px;
   color: #fff;
+  margin-bottom: 10px;
 }
 
 .user_instructions {
   color: #fff;
-  font-size: 20px;
-  background-color: #1db954;
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 0 10px 5px 10px;
-  border-radius: 50px;
+  font-size: 24px;
+  margin: 0 auto 30px auto;
+  font-weight: normal;
 }
 
 .arrows {
   font-size: 30px;
+}
+
+.horizontal_line {
+  width:60%;
+  border: 1px solid #fff;
 }

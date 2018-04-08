@@ -6,7 +6,7 @@ import Header from '../Header/Header'
 import SpotArtifyModal from '../Modal/SpotArtifyModal'
 import { connectPlayer, renderPlayer, fetchClearTracks } from '../../utils/api'
 import { checkForChangedTrack, checkForPlaylistEnd, checkForPlaylistRestart } from '../../utils/helpers'
-import { setDeviceId, error } from '../../actions/user'
+import { setDeviceId, error, refreshToken, loading } from '../../actions/user'
 import { nextTrack, clearTracksAndArt } from '../../actions/shared'
 import './style.css'
 
@@ -28,10 +28,29 @@ const CNoPlaylists = connect((state) => ({
   name: state.user[state.user.userID].display_name
 }))(NoPlaylists)
 
+class RefreshToken extends Component {
+  toBackend = () => {
+    this.props.dispatch(loading())
+
+    window.location = 'https://spotify-game-backend.herokuapp.com/login'
+  }
+  render () {
+    return (
+      <div className='noplaylists_text'>
+        <p>Unfortunately your Spotify session has timed out!</p>
+        <p>Lucky for you, this button will help you out of this predicament!</p>
+        <button className='renew_session_button' onClick={this.toBackend}>Renew Session</button>
+      </div>
+    )
+  }
+}
+const CRefreshToken = connect()(RefreshToken)
+
+
 class Dashboard extends Component {
   componentDidMount () {
     renderPlayer()
-    connectPlayer(this.props.accessToken, this.setDeviceId, this.listenForNextTrack )
+    connectPlayer(this.props.accessToken, this.setDeviceId, this.listenForNextTrack, this.invokeError)
   }
 
   setDeviceId = (deviceId) => {
@@ -45,29 +64,34 @@ class Dashboard extends Component {
 
     if(checkForPlaylistEnd(response) || checkForPlaylistRestart(response)){
       this.props.dispatch(clearTracksAndArt())
-      fetchClearTracks(this.props.accessToken, this.props.deviceId, this.invokeError)
+      fetchClearTracks(this.props.accessToken, this.props.deviceId, this.invokeError, this.refreshToken)
     }else if(checkForChangedTrack(active, response)){
       dispatch(nextTrack())
     }
   }
 
   invokeError = (msg) => {
-    this.props.dispach(error(msg, 'Warning'))
+    this.props.dispatch(error(msg, 'Warning'))
+  }
+  refreshToken = () => {
+    this.props.dispatch(refreshToken())
   }
 
   render () {
-    const { allPlaylists, tracks, artwork } = this.props
+    const { allPlaylists, tracks, artwork, refreshToken } = this.props
     return (
       <div>
         <Header />
         {
           <div>
-            {
-              !allPlaylists.length
-                ? <CNoPlaylists />
-                : !Object.keys(tracks.tracks).length || !artwork.length
-                    ?<ChoosePlaylist />
-                    :<GameView />
+            { refreshToken
+              ? <CRefreshToken />
+              : !allPlaylists.length
+                  ? <CNoPlaylists />
+                  : !Object.keys(tracks.tracks).length || !artwork.length
+                      ?<ChoosePlaylist />
+                      :<GameView />
+
             }
             <SpotArtifyModal />
           </div>
@@ -81,14 +105,14 @@ class Dashboard extends Component {
 function mapStateToProps ({ allPlaylists, tracks, artwork, user }) {
   const allTracks = tracks.tracks
   const active = allTracks.length ? allTracks[tracks.active] : null
-
+  const { accessToken, deviceId, refreshToken } = user
   return {
     allPlaylists,
     tracks,
     artwork: artwork.all,
-    accessToken: user.accessToken,
-    deviceId: user.deviceId,
-    tokenTimestamp: user.tokenTimestamp,
+    accessToken,
+    deviceId,
+    refreshToken,
     active,
   }
 }

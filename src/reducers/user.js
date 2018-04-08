@@ -1,5 +1,5 @@
 import {
-  SET_USER, REMOVE_USER, SET_ACCESS_TOKEN,
+  SET_USER, REMOVE_USER, SET_ACCESS_TOKEN, REFRESH_TOKEN, 
   SET_DEVICE_ID, LOADING, NOT_LOADING, ERROR, CLEAR_ERROR
 } from '../actions/user'
 
@@ -11,6 +11,7 @@ const defaultError ={
 const defaultState = {
   loading: false,
   error: defaultError,
+  refreshToken: false,
 }
 
 function error(state, action) {
@@ -74,6 +75,11 @@ export default function user (state = defaultState, action) {
       return {
         ...state,
         error: error(state.error, action),
+      }
+    case REFRESH_TOKEN:
+      return {
+        ...state,
+        refreshToken: true
       }
 
     default:

@@ -15,7 +15,7 @@ export function handleInitialData () {
 
     const dispatchValues = (values) => {
       dispatch(setUser(values[0]))
-      dispatch(setAllPlaylists(values[1].items)) //TODO:this is where errors on old token
+      dispatch(setAllPlaylists(values[1].items))
       dispatch(notLoading())
     }
 

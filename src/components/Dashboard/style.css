@@ -7,3 +7,37 @@
   font-size: 20px;
   margin: 70px 0;
 }
+
+.renew_session_button {
+
+}
+
+.renew_session_button{
+  font-size: 25px;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 30px;
+  background-color: #fff;
+  color: #1db954;
+  cursor: pointer;
+  transition: all .1s ease-in-out;
+  margin-top: 1px;
+  font-weight: bold;
+  /* width: 300px; */
+}
+
+.renew_session_button:hover {
+  padding: 11px 32px;
+  margin-top: 0;
+  font-size: 26px;
+  box-shadow: 10px 10px 30px #434;
+}
+
+.renew_session_button:active {
+  font-size: 25px;
+  margin-top:1px;
+  padding: 10px 30px;
+  box-shadow: 5px 5px 15px #434;
+}
+
+/* .renew_session_button:focus {outline:0;} */

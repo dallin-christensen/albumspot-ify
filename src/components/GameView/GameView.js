@@ -51,10 +51,16 @@ class ArtOption extends Component {
               style={{
                 background: isCorrect ? 'rgba(10, 160, 10, 0.7)' : 'rgba(160, 10, 10, 0.7)' ,
               }}
+              className='back_div'
             >
               {isCorrect
-                ? <IoIosCheckmarkOutline />
-                : <IoIosCloseOutline />
+                ? <div className='back_c'>
+                    <div className='c_icon'><IoIosCheckmarkOutline /></div>
+                    <div className='tile_info'>{this.props.song}</div>
+                    <div className='tile_info'>{this.props.artist}</div>
+                    <div className='tile_info'>{this.props.album}</div>
+                  </div>
+                : <div className='back_i'><IoIosCloseOutline /></div>
               }
             </div>
           </div>
@@ -94,8 +100,12 @@ class GameView extends Component {
               const isCorrect = activeTrack.img === img
               return <ConnectedArtOption
                         key={img+(Date.now()+i)}
-                        id={"option_"+i} img={img}
+                        id={"option_"+i}
+                        img={img}
                         isCorrect={isCorrect}
+                        song={activeTrack.name}
+                        artist={activeTrack.artist}
+                        album={activeTrack.album}
                       />
             })}
           </div>

@@ -2,22 +2,31 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PlaylistIcon from '../PlaylistIcon/PlaylistIcon'
 import { handleGetPlaylist } from '../../actions/shared'
+import { error } from '../../actions/user'
 import { IoArrowDownC, IoAndroidArrowDown } from 'react-icons/lib/io'
 import './style.css'
 
 class ChoosePlaylist extends Component {
+  invokeError = (msg) => {
+    this.props.dispatch(error(msg, 'Warning'))
+  }
   render(){
-    const { allPlaylists } = this.props
+    const { allPlaylists, userName, isPremium, dispatch } = this.props
     return (
       <div>
-        <h1 className='user_greeting'>Wecome, {this.props.userName}!</h1>
+        <h1 className='user_greeting'>Wecome, {userName}!</h1>
+
         <p className='user_instructions'>
           Select a playlist to get started!&nbsp;
           {<span className='arrows'><IoAndroidArrowDown /><IoAndroidArrowDown /><IoAndroidArrowDown /></span>}
         </p>
+        <hr className='horizontal_line' />
         <div className='playlist_container'>
           {allPlaylists.map((pl) => {
-            return  <span onClick={() => this.props.dispatch(handleGetPlaylist(pl.href))}>
+            return  <span onClick={() => isPremium
+                                    ? dispatch(handleGetPlaylist(pl.href))
+                                    : this.invokeError('This functionality is restricted to premium users only')
+                    }>
                       <PlaylistIcon
                         imgSrc={pl.images[0].url}
                         name={pl.name}
@@ -33,9 +42,11 @@ class ChoosePlaylist extends Component {
 
 function mapStateToProps({allPlaylists, user}) {
   const userName = user[user.userID].display_name
+  const isPremium = user[user.userID].product === 'premium'
   return {
     allPlaylists,
-    userName
+    userName,
+    isPremium,
   }
 }
 

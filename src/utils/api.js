@@ -36,22 +36,36 @@ export function renderPlayer() {
 }
 
 let player
-export function connectPlayer (token, cb, listenCb) {
+export function connectPlayer (token, cb, listenCb, errorCb) {
   window.onSpotifyWebPlaybackSDKReady = () => {
 
         const _spotify = window.Spotify
         player = new _spotify.Player({
           name: 'SpotArtify',
           getOAuthToken: cb => { cb(token); },
-          volume: 0.5
+          volume: 0.4
         });
 
         // Error handling
-        player.addListener('initialization_error', ({ message }) => { console.error(message); });
-        player.addListener('authentication_error', ({ message }) => { console.error(message); });
-        player.addListener('account_error', ({ message }) => { console.error(message); });
-        player.addListener('playback_error', ({ message }) => {
-          console.error(message);
+        player.addListener('initialization_error', (error) => {
+          const { message } = error
+          errorCb(message)
+          console.error(error);
+        });
+        player.addListener('authentication_error', (error) => {
+          const { message } = error
+          errorCb(message)
+          console.error(error);
+        });
+        player.addListener('account_error', (error) => {
+          const { message } = error
+          errorCb(message)
+          console.error(error);
+        });
+        player.addListener('playback_error', (error) => {
+          const { message } = error
+          errorCb(message)
+          console.error(error);
         });
 
         // Playback status updates
@@ -72,7 +86,10 @@ export function disconnectPlayer(){
   player.disconnect();
 }
 
-export function fetchPlayTracks(token, device_id, tracks, errorCb){
+
+
+
+export function fetchPlayTracks(token, device_id, tracks, errorCb, tokenCb){
   fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device_id}`, {
     method: 'PUT',
     body: JSON.stringify({ uris: tracks }),
@@ -80,50 +97,65 @@ export function fetchPlayTracks(token, device_id, tracks, errorCb){
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
-  }).catch(() => errorCb('Cannot play track'))
+  }).then((response) => {
+    if(response.status === 401){tokenCb()}
+  })
+  .catch(() => errorCb('Cannot play track'))
 }
 
-export function fetchPause(token, errorCb) {
+export function fetchPause(token, errorCb, tokenCb) {
   fetch('https://api.spotify.com/v1/me/player/pause', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
-  }).catch(() => errorCb('Cannot pause track'))
+  }).then((response) => {
+    if(response.status === 401){tokenCb()}
+  })
+  .catch(() => errorCb('Cannot pause track'))
 }
 
-export function fetchUnpause (token, errorCb) {
+export function fetchUnpause (token, errorCb, tokenCb) {
   fetch('https://api.spotify.com/v1/me/player/play', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
-  }).catch(() => errorCb('Cannot play track'))
+  }).then((response) => {
+    if(response.status === 401){tokenCb()}
+  })
+  .catch(() => errorCb('Cannot play track'))
 }
 
-export function fetchNext (token, errorCb) {
+export function fetchNext (token, errorCb, tokenCb) {
   fetch('https://api.spotify.com/v1/me/player/next', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
-  }).catch(() => errorCb('Cannot skip track'))
+  }).then((response) => {
+    if(response.status === 401){tokenCb()}
+  })
+  .catch(() => errorCb('Cannot skip track'))
 }
 
-export function fetchVolume (token, percent, errorCb) {
+export function fetchVolume (token, percent, errorCb, tokenCb) {
   fetch(`https://api.spotify.com/v1/me/player/volume?volume_percent=${percent}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
-  }).catch(() => errorCb('Cannot adjust volume'))
+  }).then((response) => {
+    if(response.status === 401){tokenCb()}
+  })
+  .catch(() => errorCb('Cannot adjust volume'))
 }
 
-export function fetchClearTracks (token, device_id, errorCb) {
+export function fetchClearTracks (token, device_id, errorCb, tokenCb) {
   fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device_id}`, {
     method: 'PUT',
     body: JSON.stringify({ uris: [] }),
@@ -131,7 +163,10 @@ export function fetchClearTracks (token, device_id, errorCb) {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
-  }).catch(() => errorCb('Could not clear tracks in playlist'))
+  }).then((response) => {
+    if(response.status === 401){tokenCb()}
+  })
+  .catch(() => errorCb('Could not clear tracks in playlist'))
 }
 
 // export function fetchTokenSwitch (token, cb) {
