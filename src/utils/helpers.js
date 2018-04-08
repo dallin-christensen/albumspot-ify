@@ -9,6 +9,7 @@ export function enoughArt ({ tracks }) {
     if(!artworkUrls.includes(url)){
       artworkUrls.push(url)
     }
+    return url
   })
 
   return artworkUrls.length >= 4 ? true : false

@@ -1,5 +1,3 @@
-import { formatFetchAllTracks } from './helpers'
-
 export function fetchUserAndPlaylists (accessToken, cb, errorCb) {
   const getUserPromise = fetch('https://api.spotify.com/v1/me', {
     headers: { 'Authorization': 'Bearer ' + accessToken }

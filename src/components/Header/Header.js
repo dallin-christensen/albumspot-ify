@@ -23,7 +23,7 @@ class Header extends Component {
       <div className='header_container'>
         <div className='header_title_container'>
           <div className='header_logo_container'>
-            <img src={logo_sm} className='header_logo' />
+            <img src={logo_sm} className='header_logo' alt='logo' />
           </div>
           <div
             className='header_title'

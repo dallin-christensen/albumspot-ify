@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { isAuthed, loading } from '../../actions/user'
+import { loading } from '../../actions/user'
 import './style.css'
 import logo_lg from '../../images/spotartify_200.png'
 
@@ -9,7 +9,6 @@ class Login extends Component {
     e.preventDefault()
 
     this.props.dispatch(loading())
-
     window.location = 'https://spotify-game-backend.herokuapp.com/login'
   }
   render () {
@@ -19,7 +18,7 @@ class Login extends Component {
           Hello and Welcome to
         </div>
         <div className='login_logo_container'>
-          <img className='login_logo' src={logo_lg} />
+          <img className='login_logo' src={logo_lg} alt='big awesome logo' />
           <div className='login_logo_text'>SpotArtify</div>
         </div>
         <div className='login_overview_container'>

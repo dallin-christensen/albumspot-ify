@@ -17,12 +17,11 @@ class ArtOption extends Component {
     }
   }
   flipTile = (e) => {
-    const clicked = e.target
     this.setState({ clicked: true, })
     this.props.dispatch(guess(this.props.isCorrect))
   }
   render() {
-    const { isCorrect, img, children, hasGuessed, correct } = this.props
+    const { isCorrect, img, hasGuessed, correct, song, artist, album } = this.props
     const { clicked } = this.state
     return (
       <div className="flip-container">
@@ -56,9 +55,9 @@ class ArtOption extends Component {
               {isCorrect
                 ? <div className='back_c'>
                     <div className='c_icon'><IoIosCheckmarkOutline /></div>
-                    <div className='tile_info'>{this.props.song}</div>
-                    <div className='tile_info'>{this.props.artist}</div>
-                    <div className='tile_info'>{this.props.album}</div>
+                    <div className='tile_info'>{song}</div>
+                    <div className='tile_info'>{artist}</div>
+                    <div className='tile_info'>{album}</div>
                   </div>
                 : <div className='back_i'><IoIosCloseOutline /></div>
               }

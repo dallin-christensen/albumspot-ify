@@ -1,4 +1,4 @@
-import { setUser, loading, notLoading, error } from './user'
+import { setUser, notLoading, error } from './user'
 import { setAllPlaylists } from './allPlaylists'
 import { fetchUserAndPlaylists, fetchPlaylist } from '../utils/api'
 import { setPlaylist } from './playlist'

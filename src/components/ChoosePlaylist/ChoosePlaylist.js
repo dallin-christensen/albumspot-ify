@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import PlaylistIcon from '../PlaylistIcon/PlaylistIcon'
 import { handleGetPlaylist } from '../../actions/shared'
 import { error } from '../../actions/user'
-import { IoArrowDownC, IoAndroidArrowDown } from 'react-icons/lib/io'
+import { IoAndroidArrowDown } from 'react-icons/lib/io'
 import './style.css'
 
 class ChoosePlaylist extends Component {
@@ -22,11 +22,14 @@ class ChoosePlaylist extends Component {
         </p>
         <hr className='horizontal_line' />
         <div className='playlist_container'>
-          {allPlaylists.map((pl) => {
-            return  <span onClick={() => isPremium
-                                    ? dispatch(handleGetPlaylist(pl.href))
-                                    : this.invokeError('This functionality is restricted to premium users only')
-                    }>
+          {allPlaylists.map((pl, i) => {
+            return  <span
+                      key={pl.name + i}
+                      onClick={() => isPremium
+                                ? dispatch(handleGetPlaylist(pl.href))
+                                : this.invokeError('This functionality is restricted to premium users only')
+                              }
+                    >
                       <PlaylistIcon
                         imgSrc={pl.images[0].url}
                         name={pl.name}
