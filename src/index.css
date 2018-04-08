@@ -12,10 +12,11 @@ body {
 }
 
 html, body, .second_gradient {
-  height: 1px;
+  height: 200px;
   margin: 0;
 }
 
 .second_gradient {
-  background: linear-gradient(to top, rgba(0,0,0,0.2), rgba(255,0,0,0));
+  background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(255,0,0,0));
+  /* background:red; */
 }

@@ -1,5 +1,5 @@
 .header_container {
-  width: 100%;
+  width: 98%;
   padding: 20px 0;
   display: flex;
   flex-flow: row wrap;
@@ -7,6 +7,7 @@
   color: #fff;
   align-items: center;
   cursor: pointer;
+  margin: 0 auto;
 }
 
 .header_logo_container {

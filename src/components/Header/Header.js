@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import './style.css'
-import { fetchClearTracks } from '../../utils/api'
+import { fetchClearTracks, disconnectPlayer } from '../../utils/api'
 import { clearTracksAndArt } from '../../actions/shared'
 import { error, refreshToken } from '../../actions/user'
-import logo_sm from '../../images/spotartify_50.png'
+import logo_sm from '../../images/spotartify_200.png'
 
 class Header extends Component {
   clearTracksAndArt = () => {
@@ -16,6 +16,7 @@ class Header extends Component {
   }
   refreshToken = () => {
     this.props.dispatch(refreshToken())
+    disconnectPlayer()
   }
   render () {
     const { inGameview } = this.props

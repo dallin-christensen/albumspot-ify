@@ -13,15 +13,12 @@
 .user_instructions {
   color: #fff;
   font-size: 24px;
-  margin: 0 auto 30px auto;
+  margin: 0 auto 5px auto;
   font-weight: normal;
-}
-
-.arrows {
-  font-size: 30px;
 }
 
 .horizontal_line {
   width:60%;
   border: 1px solid #fff;
+  margin: 50px auto 10px auto;
 }

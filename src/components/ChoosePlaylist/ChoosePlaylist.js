@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import PlaylistIcon from '../PlaylistIcon/PlaylistIcon'
 import { handleGetPlaylist } from '../../actions/shared'
 import { error } from '../../actions/user'
-import { IoAndroidArrowDown } from 'react-icons/lib/io'
 import './style.css'
 
 class ChoosePlaylist extends Component {
@@ -17,8 +16,7 @@ class ChoosePlaylist extends Component {
         <h1 className='user_greeting'>Wecome, {userName}!</h1>
 
         <p className='user_instructions'>
-          Select a playlist to get started!&nbsp;
-          {<span className='arrows'><IoAndroidArrowDown /><IoAndroidArrowDown /><IoAndroidArrowDown /></span>}
+          Select a playlist to get started!
         </p>
         <hr className='horizontal_line' />
         <div className='playlist_container'>

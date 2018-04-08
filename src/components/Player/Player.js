@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import './style.css'
-import { fetchPlayTracks, fetchPause, fetchUnpause, fetchNext, fetchVolume } from '../../utils/api'
+import { fetchPlayTracks, fetchPause, fetchUnpause, fetchNext, fetchVolume, disconnectPlayer } from '../../utils/api'
 import { formatFetchAllTracks } from '../../utils/helpers'
 import { error, refreshToken } from '../../actions/user'
 import { nextNotAvailable } from '../../actions/game'
@@ -61,6 +61,7 @@ class Player extends Component {
   }
   refreshToken = () => {
     this.props.dispatch(refreshToken())
+    disconnectPlayer()
   }
 
   render () {

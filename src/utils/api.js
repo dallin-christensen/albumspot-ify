@@ -34,7 +34,7 @@ export function renderPlayer() {
 }
 
 let player
-export function connectPlayer (token, cb, listenCb, errorCb) {
+export function connectPlayer (token, cb, listenCb, errorCb, tokenCb) {
   window.onSpotifyWebPlaybackSDKReady = () => {
 
         const _spotify = window.Spotify
@@ -48,22 +48,22 @@ export function connectPlayer (token, cb, listenCb, errorCb) {
         player.addListener('initialization_error', (error) => {
           const { message } = error
           errorCb(message)
-          console.error(error);
+          console.error('1', error);
         });
         player.addListener('authentication_error', (error) => {
           const { message } = error
           errorCb(message)
-          console.error(error);
+          console.error('2', error);
         });
         player.addListener('account_error', (error) => {
           const { message } = error
           errorCb(message)
-          console.error(error);
+          console.error('3', error);
         });
         player.addListener('playback_error', (error) => {
           const { message } = error
-          errorCb(message)
-          console.error(error);
+          message === 'Playback error' ? tokenCb() : errorCb(message)
+          console.error('4', error);
         });
 
         // Playback status updates
@@ -72,8 +72,8 @@ export function connectPlayer (token, cb, listenCb, errorCb) {
           listenCb(state)
         });
 
-        player.addListener('ready', ({ device_id }) => {
-          cb(device_id)
+        player.addListener('ready', (response) => {
+          cb(response.device_id)
         });
 
         player.connect();

@@ -4,7 +4,7 @@ import ChoosePlaylist from '../ChoosePlaylist/ChoosePlaylist'
 import GameView from '../GameView/GameView'
 import Header from '../Header/Header'
 import SpotArtifyModal from '../Modal/SpotArtifyModal'
-import { connectPlayer, renderPlayer, fetchClearTracks } from '../../utils/api'
+import { connectPlayer, renderPlayer, fetchClearTracks, disconnectPlayer } from '../../utils/api'
 import { checkForChangedTrack, checkForPlaylistEnd, checkForPlaylistRestart } from '../../utils/helpers'
 import { setDeviceId, error, refreshToken, loading } from '../../actions/user'
 import { nextTrack, clearTracksAndArt } from '../../actions/shared'
@@ -31,7 +31,6 @@ const CNoPlaylists = connect((state) => ({
 class RefreshToken extends Component {
   toBackend = () => {
     this.props.dispatch(loading())
-
     window.location = 'https://spotify-game-backend.herokuapp.com/login'
   }
   render () {
@@ -50,7 +49,13 @@ const CRefreshToken = connect()(RefreshToken)
 class Dashboard extends Component {
   componentDidMount () {
     renderPlayer()
-    connectPlayer(this.props.accessToken, this.setDeviceId, this.listenForNextTrack, this.invokeError)
+    connectPlayer(
+      this.props.accessToken,
+      this.setDeviceId,
+      this.listenForNextTrack,
+      this.invokeError,
+      this.refreshToken
+    )
   }
 
   setDeviceId = (deviceId) => {
@@ -59,7 +64,7 @@ class Dashboard extends Component {
 
   listenForNextTrack = (response) => {
     const { dispatch, active } = this.props
-
+    
     if(!active){ return }
 
     if(checkForPlaylistEnd(response) || checkForPlaylistRestart(response)){
@@ -75,6 +80,7 @@ class Dashboard extends Component {
   }
   refreshToken = () => {
     this.props.dispatch(refreshToken())
+    disconnectPlayer()
   }
 
   render () {
