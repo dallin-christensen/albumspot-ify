@@ -13,7 +13,7 @@ class ChoosePlaylist extends Component {
     const { allPlaylists, userName, isPremium, dispatch } = this.props
     return (
       <div>
-        <h1 className='user_greeting'>Wecome, {userName}!</h1>
+        <h1 className='user_greeting'>{userName === '' ? 'Welcome!' : `Welcome, ${userName}!`}</h1>
 
         <p className='user_instructions'>
           Select a playlist to get started!
