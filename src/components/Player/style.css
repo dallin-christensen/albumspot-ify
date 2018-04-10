@@ -14,7 +14,15 @@
   border: 2px solid #ddd;
 }
 
-.left_section{}
+.left_section, .volume_section{
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.volume_section {
+  margin-right: 5px;
+}
 
 .player_play_border{
   display: inline-block;
@@ -30,58 +38,52 @@
 }
 
 .player_play {
-  width: 25px;
+  width: 40px;
+  height: 40px;
   border: 1px solid #fff;
   border-radius: 50px;
   font-size: 23px;
-  padding: 5px 9px 10px 9px;
   display: inline-block;
-  text-align: center;
-  vertical-align: middle;
   cursor: pointer;
 }
-.extra_margin_left{
-  margin-left: 2px;
+
+.player_play svg, .player_skip svg, .player_vol_symbol svg, .rangeslider {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  vertical-align: top !important;
 }
 
+
 .player_skip {
-  display: inline-block;
+  width: 35px;
+  height: 35px;
   font-size: 30px;
-  vertical-align: middle;
-  padding: 0px 5px 5px 5px;
   cursor: pointer;
 }
 
 .player_skip_inactive {
-  display: inline-block;
+  width: 35px;
+  height: 35px;
   font-size: 30px;
-  vertical-align: middle;
-  padding: 0px 5px 5px 5px;
   color: #aaa;
 }
 
 .player_skip:active {
   font-size: 28px;
-  margin-bottom: 1px;
-  margin-left: 1px;
-}
-
-.volume_section {
-  padding: 3px 0 0 0;
-  text-align: right;
 }
 
 .player_vol_symbol {
-  display: inline-block;
   font-size: 20px;
-  vertical-align: middle;
-  padding: 0px 5px 5px 5px;
+  width:25px;
+  height:25px;
 }
 
 .player_vol_slider {
   display: inline-block;
   width:125px;
-  margin-bottom: 4px;
+  height: 20px;
 }
 
 .rangeslider {

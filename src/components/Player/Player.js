@@ -71,7 +71,7 @@ class Player extends Component {
           <div className='player_play_border'>
             <div className='player_play' onClick={this.togglePause}>
               {this.state.paused
-                ? <FaPlay className='extra_margin_left' />
+                ? <FaPlay />
                 : <FaPause /> }
             </div>
           </div>

@@ -55,10 +55,17 @@
 }
 
 .tile_info {
-	width: 90%;
+	width: 230px;
 	margin: 0 auto;
 	white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 	font-weight: normal;
+}
+
+.back_c, .back_i {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-60%);
 }
