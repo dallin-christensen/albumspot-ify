@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { shuffle } from '../../utils/utils' //TODO:may need to get rid of
-import Player from '../Player/Player'
-import { guess } from '../../actions/game'
+import { shuffle } from '../../utils/utils'
+import { Player } from '../'
+import { guess } from '../../actions'
 import { IoIosCheckmarkOutline, IoIosCloseOutline } from 'react-icons/lib/io'
 import './style.css'
 import './tile.css'

@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import queryString from 'query-string'
-import { setAccessToken } from '../../actions/user'
-import Login from '../Login/Login'
-import Dashboard from '../Dashboard/Dashboard'
-import Loading from '../Loading/Loading'
-import { handleInitialData } from '../../actions/shared'
+import { setAccessToken, handleInitialData } from '../../actions'
+import { Login, Dashboard, Loading } from '../'
 import './style.css'
 
 

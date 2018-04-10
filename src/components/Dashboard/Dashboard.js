@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import ChoosePlaylist from '../ChoosePlaylist/ChoosePlaylist'
-import GameView from '../GameView/GameView'
-import Header from '../Header/Header'
+import { ChoosePlaylist, GameView, Header } from '../'
 import SpotArtifyModal from '../Modal/SpotArtifyModal'
 import { connectPlayer, renderPlayer, fetchClearTracks, disconnectPlayer } from '../../utils/api'
 import { checkForChangedTrack, checkForPlaylistEnd, checkForPlaylistRestart } from '../../utils/helpers'
-import { setDeviceId, error, refreshToken, loading } from '../../actions/user'
-import { nextTrack, clearTracksAndArt } from '../../actions/shared'
+import { setDeviceId, error, refreshToken, loading, nextTrack, clearTracksAndArt } from '../../actions'
 import './style.css'
 
 function NoPlaylists (props) {
@@ -64,7 +61,7 @@ class Dashboard extends Component {
 
   listenForNextTrack = (response) => {
     const { dispatch, active } = this.props
-    
+
     if(!active){ return }
 
     if(checkForPlaylistEnd(response) || checkForPlaylistRestart(response)){

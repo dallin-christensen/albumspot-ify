@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import './style.css'
 import { fetchClearTracks, disconnectPlayer } from '../../utils/api'
-import { clearTracksAndArt } from '../../actions/shared'
-import { error, refreshToken } from '../../actions/user'
+import { clearTracksAndArt, error, refreshToken } from '../../actions'
 import logo_sm from '../../images/spotartify_200.png'
+import './style.css'
 
 class Header extends Component {
   clearTracksAndArt = () => {

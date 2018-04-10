@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { loading } from '../../actions/user'
-import './style.css'
+import { loading } from '../../actions'
 import logo_lg from '../../images/spotartify_200.png'
+import './style.css'
 
 class Login extends Component {
   authenticate = (e) => {
