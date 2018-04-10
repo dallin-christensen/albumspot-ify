@@ -1,4 +1,4 @@
-#SpotArtify
+# SpotArtify
 
 This application allows the user to play their Spotify playlists while matching album artwork with the current track.
 
@@ -10,7 +10,7 @@ Hosted site can be found here -> [SpotArtify](https://spotartify.firebaseapp.com
 
 ![SpotArtify gif](https://github.com/dallin-christensen/albumspot-ify/raw/master/src/spotartify_gif.gif)
 
-##Install
+## Install
 
 ```
 download/clone
