@@ -47,7 +47,11 @@
   cursor: pointer;
 }
 
-.player_play svg, .player_skip svg, .player_vol_symbol svg, .rangeslider {
+.player_play svg,
+.player_skip svg,
+.player_skip_inactive svg,
+.player_vol_symbol svg,
+.rangeslider {
   position: relative;
   top: 50%;
   left: 50%;
@@ -55,18 +59,19 @@
   vertical-align: top !important;
 }
 
-
-.player_skip {
-  width: 35px;
-  height: 35px;
-  font-size: 30px;
+.player_skip,
+.player_skip_inactive {
   cursor: pointer;
 }
 
+.player_skip,
 .player_skip_inactive {
   width: 35px;
   height: 35px;
   font-size: 30px;
+}
+
+.player_skip_inactive {
   color: #aaa;
 }
 
