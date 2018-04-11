@@ -1,6 +1,6 @@
 export { setAllPlaylists } from './allPlaylists'
 export { setArtwork, setWrongArtwork } from './artwork'
-export { guess, resetGuess, clearGame, nextNotAvailable } from './game'
+export { guess, resetGuess, clearGame, nextNotAvailable, gameEnd } from './game'
 export { setPlaylist } from './playlist'
 export { handleInitialData, handleGetPlaylist,
         createWrongArtwork, nextTrack, clearTracksAndArt } from './shared'

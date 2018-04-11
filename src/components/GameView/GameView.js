@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { shuffle } from '../../utils/utils'
-import { Player } from '../'
+import { Player, GameReview } from '../'
 import { guess } from '../../actions'
 import { IoIosCheckmarkOutline, IoIosCloseOutline } from 'react-icons/lib/io'
 import './style.css'
@@ -93,36 +93,41 @@ class GameView extends Component {
     const { activeTrack } = this.props
     return(
       <div>
-        <div>
-          <div className='art_container'>
-            {this.shufflePicutres().map((img, i) =>{
-              const isCorrect = activeTrack.img === img
-              return <ConnectedArtOption
-                        key={img+(Date.now()+i)}
-                        id={"option_"+i}
-                        img={img}
-                        isCorrect={isCorrect}
-                        song={activeTrack.name}
-                        artist={activeTrack.artist}
-                        album={activeTrack.album}
-                      />
-            })}
-          </div>
-          { this.props.deviceId && <Player /> }
-        </div>
+        { this.props.gameEnd
+            ? <GameReview />
+            : <div>
+                <div className='art_container'>
+                  {this.shufflePicutres().map((img, i) =>{
+                    const isCorrect = activeTrack.img === img
+                    return <ConnectedArtOption
+                              key={img+(Date.now()+i)}
+                              id={"option_"+i}
+                              img={img}
+                              isCorrect={isCorrect}
+                              song={activeTrack.name}
+                              artist={activeTrack.artist}
+                              album={activeTrack.album}
+                            />
+                  })}
+                </div>
+                { this.props.deviceId && <Player /> }
+              </div>
+        }
       </div>
     )
   }
 }
 
-function mapStateToProps ({ tracks, artwork, user }) {
+function mapStateToProps ({ tracks, artwork, user, game }) {
   const activeTrack = tracks.tracks[tracks.active]
   const { wrongArtwork } = artwork
   const { deviceId } = user
+  const { gameEnd } = game
   return {
     activeTrack,
     wrongArtwork,
     deviceId,
+    gameEnd,
   }
 }
 

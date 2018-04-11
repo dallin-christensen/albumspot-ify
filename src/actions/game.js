@@ -2,6 +2,7 @@ export const GUESS = 'GUESS'
 export const RESET_GUESS = 'RESET_GUESS'
 export const CLEAR_GAME = 'CLEAR_GAME'
 export const NEXT_NOT_AVAILABLE = 'NEXT_NOT_AVAILABLE'
+export const GAME_END = 'GAME_END'
 
 export function guess (correct) {
   return {
@@ -25,5 +26,11 @@ export function clearGame () {
 export function nextNotAvailable () {
   return {
     type: NEXT_NOT_AVAILABLE
+  }
+}
+
+export function gameEnd () {
+  return {
+    type: GAME_END
   }
 }

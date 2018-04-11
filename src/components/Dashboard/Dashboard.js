@@ -4,7 +4,7 @@ import { ChoosePlaylist, GameView, Header } from '../'
 import SpotArtifyModal from '../Modal/SpotArtifyModal'
 import { connectPlayer, renderPlayer, fetchClearTracks, disconnectPlayer } from '../../utils/api'
 import { checkForChangedTrack, checkForPlaylistEnd, checkForPlaylistRestart } from '../../utils/helpers'
-import { setDeviceId, error, refreshToken, loading, nextTrack, clearTracksAndArt } from '../../actions'
+import { setDeviceId, error, refreshToken, loading, nextTrack, gameEnd } from '../../actions'
 import './style.css'
 
 function NoPlaylists (props) {
@@ -65,7 +65,8 @@ class Dashboard extends Component {
     if(!active){ return }
 
     if(checkForPlaylistEnd(response) || checkForPlaylistRestart(response)){
-      this.props.dispatch(clearTracksAndArt())
+      // this.props.dispatch(clearTracksAndArt())
+      this.props.dispatch(gameEnd())
       fetchClearTracks(this.props.accessToken, this.props.deviceId, this.invokeError, this.refreshToken)
     }else if(checkForChangedTrack(active, response)){
       dispatch(nextTrack())
