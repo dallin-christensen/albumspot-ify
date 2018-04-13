@@ -7,9 +7,13 @@
 }
 
 .review_flex {
+  margin: 30px auto 0 auto;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
+  background: rgba(255, 255, 255, 0.4);
+  max-width: 800px;
+  border-radius: 15px;
 }
 
 .review_data_container {
