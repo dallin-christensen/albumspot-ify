@@ -25,6 +25,21 @@ export function fetchPlaylist (accessToken, href, cb, errorCb) {
   .catch(() => errorCb('Could not retrieve playlist data'))
 }
 
+export function fetchSearchPlaylists (token, searchKey, cb, errorCb) {
+  fetch(`https://api.spotify.com/v1/search?q=${searchKey}&type=playlist&limit=15`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+  }).then((response) => response.json())
+  .then((playlists) => {
+    cb(playlists.items)
+  })
+  .catch(() => errorCb('Could not search Spotify playlists'))
+}
+
 export function renderPlayer() {
   const s = document.createElement('script')
   s.type = 'text/javascript'

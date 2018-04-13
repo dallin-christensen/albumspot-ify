@@ -1,6 +1,7 @@
 import { setUser, notLoading, error } from './user'
 import { setAllPlaylists } from './allPlaylists'
-import { fetchUserAndPlaylists, fetchPlaylist } from '../utils/api'
+import { setPlaylistSearch } from './playlistSearch'
+import { fetchUserAndPlaylists, fetchPlaylist, fetchSearchPlaylists } from '../utils/api'
 import { setPlaylist } from './playlist'
 import { formatTracks, formatArtwork, enoughTracks, enoughArt } from '../utils/helpers'
 import { setTracks } from './tracks'
@@ -76,6 +77,21 @@ export function createWrongArtwork () {
     }
 
     dispatch(setWrongArtwork(wrongs))
+  }
+}
+
+export function searchPlaylists (searchKey) {
+  return (dispatch, getState) => {
+    const accessToken = getState().user.accessToken
+
+    const dispatchSetPlaylistSearch = (items) => {
+      dispatch(setPlaylistSearch(items))
+    }
+    const errorCb = (msg) => {
+      dispatch(error(msg, 'Warning'))
+    }
+
+    fetchSearchPlaylists(accessToken, searchKey, dispatchSetPlaylistSearch, errorCb)
   }
 }
 
