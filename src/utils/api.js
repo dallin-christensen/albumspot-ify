@@ -35,7 +35,7 @@ export function fetchSearchPlaylists (token, searchKey, cb, errorCb) {
       },
   }).then((response) => response.json())
   .then((playlists) => {
-    cb(playlists.items)
+    cb(playlists.playlists.items)
   })
   .catch(() => errorCb('Could not search Spotify playlists'))
 }

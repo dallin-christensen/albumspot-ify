@@ -93,7 +93,7 @@ class Dashboard extends Component {
               : !allPlaylists.length
                   ? <CNoPlaylists />
                   : !Object.keys(tracks.tracks).length || !artwork.length
-                      ?<PlaylistSearch />
+                      ?<ChoosePlaylist />
                       :<GameView />
 
             }

@@ -18,6 +18,12 @@ green:#1db954 */
 .playlist_title {
   font-size: 20px;
   color: #fff;
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .playlist_icon:hover {
