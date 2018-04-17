@@ -1,5 +1,5 @@
 import {
-  SET_USER, SET_ACCESS_TOKEN, REFRESH_TOKEN, 
+  SET_USER, SET_ACCESS_TOKEN, REFRESH_TOKEN, TOGGLE_SEARCH_VIEW,
   SET_DEVICE_ID, LOADING, NOT_LOADING, ERROR, CLEAR_ERROR
 } from '../actions/user'
 
@@ -12,6 +12,7 @@ const defaultState = {
   loading: false,
   error: defaultError,
   refreshToken: false,
+  searchView: false,
 }
 
 function error(state, action) {
@@ -80,6 +81,12 @@ export default function user (state = defaultState, action) {
       return {
         ...state,
         refreshToken: true
+      }
+
+    case TOGGLE_SEARCH_VIEW:
+      return {
+        ...state,
+        searchView: !state.searchView,
       }
 
     default:

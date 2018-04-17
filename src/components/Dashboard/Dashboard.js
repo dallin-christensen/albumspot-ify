@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { ChoosePlaylist, GameView, Header, PlaylistSearch } from '../'
+import { ChoosePlaylist, GameView, Header } from '../'
 import SpotArtifyModal from '../Modal/SpotArtifyModal'
 import { connectPlayer, renderPlayer, fetchClearTracks, disconnectPlayer } from '../../utils/api'
 import { checkForChangedTrack, checkForPlaylistEnd, checkForPlaylistRestart } from '../../utils/helpers'
@@ -92,16 +92,14 @@ class Dashboard extends Component {
               ? <CRefreshToken />
               : !allPlaylists.length
                   ? <CNoPlaylists />
-                  : !Object.keys(tracks.tracks).length || !artwork.length
-                      ?<ChoosePlaylist />
-                      :<GameView />
-
+                  : Object.keys(tracks.tracks).length && artwork.length
+                      ?<GameView />
+                      : <ChoosePlaylist />
             }
             <SpotArtifyModal />
           </div>
         }
       </div>
-
     )
   }
 }

@@ -44,3 +44,14 @@
   border-radius: 20px;
   font-size: 20px;
 }
+
+.menu_option {
+  font-size: 28px;
+  margin-right:2px;
+  /* transition: all .1s ease-in-out; */
+}
+
+.menu_option:hover {
+  font-size: 32px;
+  margin-right: 0;
+}

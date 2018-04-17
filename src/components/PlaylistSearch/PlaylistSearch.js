@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { searchPlaylists, handleGetPlaylist, error, clearPlaylistSearch } from '../../actions'
 import { PlaylistIcon } from '../'
+import { IoAndroidSearch } from 'react-icons/lib/io'
 import './style.css'
 
 class PlaylistSearch extends Component {
@@ -36,7 +37,10 @@ class PlaylistSearch extends Component {
     const { playlistSearch, isPremium, dispatch } = this.props
     return (
       <div>
-        <input className='searchbar' type='text' value={this.state.searchKey}  onChange={this.updateSearchKey}/>
+      <div className='magnifying_glass'>
+        <IoAndroidSearch />
+      </div>
+      <input className='searchbar' type='text' value={this.state.searchKey}  onChange={this.updateSearchKey}/>
         {
           playlistSearch.length
             ? <div className='playlist_container'>

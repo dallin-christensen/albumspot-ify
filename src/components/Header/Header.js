@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchClearTracks, disconnectPlayer } from '../../utils/api'
-import { clearTracksAndArt, error, refreshToken } from '../../actions'
+import { clearTracksAndArt, error, refreshToken, toggleSearchView } from '../../actions'
+import { IoAndroidSearch, IoAndroidArrowBack } from 'react-icons/lib/io'
 import logo_sm from '../../images/spotartify_200.png'
 import './style.css'
 
@@ -17,8 +18,11 @@ class Header extends Component {
     this.props.dispatch(refreshToken())
     disconnectPlayer()
   }
+  toggleSearchView = () => {
+    this.props.dispatch(toggleSearchView())
+  }
   render () {
-    const { inGameview } = this.props
+    const { inGameview, searchView } = this.props
     return (
       <div className='header_container'>
         <div className='header_title_container'>
@@ -34,8 +38,11 @@ class Header extends Component {
         </div>
         {
           inGameview
-            && <div>score
+            ? <div>score
                 <div className='header_score_container'>{this.props.score}/{this.props.tracksLen}</div>
+              </div>
+            : <div onClick={this.toggleSearchView} className='menu_option'>
+                {!searchView ? <IoAndroidSearch /> : <IoAndroidArrowBack />}
               </div>
         }
       </div>
@@ -46,7 +53,7 @@ class Header extends Component {
 function mapStateToProps({tracks, artwork, user, game}) {
   const tracksLen = Object.keys(tracks.tracks).length
   const inGameview = tracksLen && artwork.all.length ? true : false
-  const { accessToken, deviceId } = user
+  const { accessToken, deviceId, searchView } = user
   const { score } = game
   return {
     inGameview,
@@ -54,6 +61,7 @@ function mapStateToProps({tracks, artwork, user, game}) {
     deviceId,
     score,
     tracksLen,
+    searchView,
   }
 }
 

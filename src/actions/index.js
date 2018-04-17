@@ -7,4 +7,4 @@ export { handleInitialData, handleGetPlaylist,
         createWrongArtwork, nextTrack, clearTracksAndArt, searchPlaylists } from './shared'
 export { setTracks, nextTrackActive, activeStartOver } from './tracks'
 export { setUser, setAccessToken, setDeviceId, loading,
-        notLoading, error, clearError, refreshToken } from './user'
+        notLoading, error, clearError, refreshToken, toggleSearchView } from './user'
