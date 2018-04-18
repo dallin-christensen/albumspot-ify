@@ -1,13 +1,21 @@
 .searchbar {
   width: 200px;
-  height: 20px;
+  height: 22px;
   border: 1px solid #fff;
   padding: 0 2px;
   border-radius: 2px;
-  margin: 20px 0;
+  margin-top:3px;
+  font-size: 16px;
 }
 .magnifying_glass{
-  font-size: 25px;
-  padding-top:15px;
-  display: inline-block;
+  font-size: 26px;
+  margin-right:2px;
+}
+
+.playlist_search{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 }

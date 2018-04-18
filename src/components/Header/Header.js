@@ -41,8 +41,10 @@ class Header extends Component {
             ? <div>score
                 <div className='header_score_container'>{this.props.score}/{this.props.tracksLen}</div>
               </div>
-            : <div onClick={this.toggleSearchView} className='menu_option'>
-                {!searchView ? <IoAndroidSearch /> : <IoAndroidArrowBack />}
+            : <div onClick={this.toggleSearchView}
+                className='menu_option'
+                title={!searchView ? 'Search all public Spotify playlists' : 'Back to your playlists'} >
+                  {!searchView ? <IoAndroidSearch /> : <IoAndroidArrowBack />}
               </div>
         }
       </div>

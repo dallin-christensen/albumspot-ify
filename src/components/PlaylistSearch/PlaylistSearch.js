@@ -13,6 +13,9 @@ class PlaylistSearch extends Component {
       searchKey: ''
     }
   }
+  componentDidMount () {
+    document.getElementById('Searchbar').focus()
+  }
   updateSearchKey = (e) => {
     e.preventDefault()
     const value = e.target.value
@@ -37,10 +40,13 @@ class PlaylistSearch extends Component {
     const { playlistSearch, isPremium, dispatch } = this.props
     return (
       <div>
-      <div className='magnifying_glass'>
-        <IoAndroidSearch />
-      </div>
-      <input className='searchbar' type='text' value={this.state.searchKey}  onChange={this.updateSearchKey}/>
+        <div className='playlist_search'>
+          <div className='magnifying_glass'>
+            <IoAndroidSearch />
+          </div>
+          <input className='searchbar' id='Searchbar' type='text' value={this.state.searchKey}  onChange={this.updateSearchKey}/>
+        </div>
+
         {
           playlistSearch.length
             ? <div className='playlist_container'>

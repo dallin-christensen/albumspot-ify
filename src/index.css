@@ -20,3 +20,10 @@ html, body, .second_gradient {
   background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(255,0,0,0));
   /* background:red; */
 }
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
