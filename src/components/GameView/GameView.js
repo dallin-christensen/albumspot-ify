@@ -90,12 +90,13 @@ class GameView extends Component {
   }
 
   render(){
-    const { activeTrack } = this.props
+    const { activeTrack, playlistName } = this.props
     return(
       <div>
         { this.props.gameEnd
             ? <GameReview />
             : <div>
+                <div>{playlistName}</div>
                 <div className='art_container'>
                   {this.shufflePicutres().map((img, i) =>{
                     const isCorrect = activeTrack.img === img
@@ -118,7 +119,7 @@ class GameView extends Component {
   }
 }
 
-function mapStateToProps ({ tracks, artwork, user, game }) {
+function mapStateToProps ({ tracks, artwork, user, game, playlist }) {
   const activeTrack = tracks.tracks[tracks.active]
   const { wrongArtwork } = artwork
   const { deviceId } = user
@@ -128,6 +129,7 @@ function mapStateToProps ({ tracks, artwork, user, game }) {
     wrongArtwork,
     deviceId,
     gameEnd,
+    playlistName: playlist.name,
   }
 }
 
