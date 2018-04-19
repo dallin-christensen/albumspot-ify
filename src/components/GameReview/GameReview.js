@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { PlaylistIcon } from '../'
 import { clearTracksAndArt, handleGetPlaylist } from '../../actions'
+import logo_md from '../../images/spotartify_200.png'
 import './style.css'
 
 class GameReview extends Component {
@@ -43,12 +44,13 @@ class GameReview extends Component {
 }
 
 function mapStateToProps ({ game, tracks, playlist }) {
+  const playlistImg = playlist.images[0] ? playlist.images[0].url : logo_md
   return {
     score: game.score,
     trackLen: tracks.tracks.length,
     playlistName: playlist.name,
-    playlistImg: playlist.images[0].url,
     playlistHref: playlist.href,
+    playlistImg,
   }
 }
 

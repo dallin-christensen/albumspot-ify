@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { PlaylistIcon, PlaylistSearch } from '../'
 import { handleGetPlaylist, error } from '../../actions'
+import logo_md from '../../images/spotartify_200.png'
 import './style.css'
 
 class SavedPlaylists extends Component {
@@ -20,7 +21,7 @@ class SavedPlaylists extends Component {
                           }
                 >
                   <PlaylistIcon
-                    imgSrc={pl.images[0].url}
+                    imgSrc={pl.images[0] ? pl.images[0].url : logo_md}
                     name={pl.name}
                   />
                 </span>

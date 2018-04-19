@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { searchPlaylists, handleGetPlaylist, error, clearPlaylistSearch } from '../../actions'
 import { PlaylistIcon } from '../'
 import { IoAndroidSearch } from 'react-icons/lib/io'
+import logo_md from '../../images/spotartify_200.png'
 import './style.css'
 
 class PlaylistSearch extends Component {
@@ -60,7 +61,7 @@ class PlaylistSearch extends Component {
                                       }
                             >
                               <PlaylistIcon
-                                imgSrc={pl.images[0].url}
+                                imgSrc={pl.images[0] ? pl.images[0].url : logo_md}
                                 name={pl.name}
                               />
                             </span>
