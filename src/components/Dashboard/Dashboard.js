@@ -65,7 +65,6 @@ class Dashboard extends Component {
     if(!active){ return }
 
     if(checkForPlaylistEnd(response) || checkForPlaylistRestart(response)){
-      // this.props.dispatch(clearTracksAndArt())
       this.props.dispatch(gameEnd())
       fetchClearTracks(this.props.accessToken, this.props.deviceId, this.invokeError, this.refreshToken)
     }else if(checkForChangedTrack(active, response)){

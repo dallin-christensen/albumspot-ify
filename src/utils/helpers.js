@@ -63,18 +63,29 @@ export function checkForPlaylistEnd ({ paused, track_window, position, disallows
     && position === 0
     && disallows.resuming === true
   ){
+    console.log('paused', paused)
+    console.log('length', track_window.next_tracks.length)
+    console.log('position', position)
+    console.log('disallows resuming', disallows.resuming)
+    console.log('playlist end returned true')
     return true
   }
 
   return false
 }
 
-export function checkForPlaylistRestart ({paused, position, track_window}) {
+export function checkForPlaylistRestart ({paused, position, track_window, disallows}) {
   if(
     paused === true
     && position === 0
     && track_window.previous_tracks.length === 0
+    && disallows.pausing === true
   ){
+    console.log('paused', paused)
+    console.log('position', position)
+    console.log('how many previous tracks', track_window.previous_tracks.length)
+    console.log('disallows pausing', disallows.pausing)
+    console.log('playlist restart returned true')
     return true
   }
   return false
