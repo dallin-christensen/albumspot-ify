@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { ChoosePlaylist, GameView, Header } from '../'
 import SpotArtifyModal from '../Modal/SpotArtifyModal'
 import { connectPlayer, renderPlayer, fetchClearTracks, disconnectPlayer } from '../../utils/api'
-import { checkForChangedTrack, checkForPlaylistEnd, checkForPlaylistRestart } from '../../utils/helpers'
-import { setDeviceId, error, refreshToken, loading, nextTrack, gameEnd } from '../../actions'
+import { checkForChangedTrack, checkForPlaylistEnd, checkForPlaylistRestart, isNextTrack } from '../../utils/helpers'
+import { setDeviceId, error, refreshToken, loading, nextTrack, gameEnd, clearTracksAndArt } from '../../actions'
 import './style.css'
 
 function NoPlaylists (props) {
@@ -60,16 +60,28 @@ class Dashboard extends Component {
   }
 
   listenForNextTrack = (response) => {
-    const { dispatch, active } = this.props
+    const { dispatch, active, trackNext } = this.props
 
     if(!active){ return }
 
     if(checkForPlaylistEnd(response) || checkForPlaylistRestart(response)){
       this.props.dispatch(gameEnd())
-      fetchClearTracks(this.props.accessToken, this.props.deviceId, this.invokeError, this.refreshToken)
+      this.fetchClearTracks()
     }else if(checkForChangedTrack(active, response)){
-      dispatch(nextTrack())
+
+      if(isNextTrack(trackNext, response)){
+        dispatch(nextTrack())
+      } else {
+        dispatch(clearTracksAndArt())
+        this.fetchClearTracks()
+      }
+
     }
+  }
+
+  fetchClearTracks = () => {
+    const { accessToken, deviceId } = this.props
+    fetchClearTracks(accessToken, deviceId, this.invokeError, this.refreshToken)
   }
 
   invokeError = (msg) => {
@@ -106,6 +118,9 @@ class Dashboard extends Component {
 function mapStateToProps ({ allPlaylists, tracks, artwork, user }) {
   const allTracks = tracks.tracks
   const active = allTracks.length ? allTracks[tracks.active] : null
+  const trackNext = allTracks.length && tracks.active !== tracks.length - 1
+          ? allTracks[tracks.active + 1]
+          : null
   const { accessToken, deviceId, refreshToken } = user
   return {
     allPlaylists,
@@ -115,6 +130,7 @@ function mapStateToProps ({ allPlaylists, tracks, artwork, user }) {
     deviceId,
     refreshToken,
     active,
+    trackNext,
   }
 }
 

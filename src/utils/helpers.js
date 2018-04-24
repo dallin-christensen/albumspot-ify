@@ -87,3 +87,7 @@ export function checkForPlaylistRestart ({paused, position, track_window, disall
   }
   return false
 }
+
+export function isNextTrack ({ uri }, { track_window }){
+  return uri === track_window.current_track.uri
+}
