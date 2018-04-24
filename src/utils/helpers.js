@@ -5,6 +5,7 @@ export function enoughTracks ({ tracks }) {
 export function enoughArt ({ tracks }) {
   let artworkUrls = []
   tracks.items.map((trackData) => {
+    if(!trackData.track.album.images.length){ return null }
     let { url } = trackData.track.album.images[1]
     if(!artworkUrls.includes(url)){
       artworkUrls.push(url)
@@ -16,7 +17,11 @@ export function enoughArt ({ tracks }) {
 }
 
 export function formatTracks ({ tracks }) {
-  return tracks.items.map((trackData) => {
+  let filteredTracks = tracks.items.filter((trackData) => {
+    return !!trackData.track.href
+  })
+
+  return filteredTracks.map((trackData) => {
     return {
       name: trackData.track.name,
       artist: trackData.track.artists[0].name,
@@ -29,7 +34,10 @@ export function formatTracks ({ tracks }) {
 }
 
 export function formatArtwork ({ items }) {
-  return items.map(trackData => trackData.track.album.images[1].url )
+  let filteredItems = items.filter((trackData) => {
+    return !!trackData.track.href
+  })
+  return filteredItems.map((trackData) => trackData.track.album.images[1].url)
 }
 
 
@@ -63,14 +71,8 @@ export function checkForPlaylistEnd ({ paused, track_window, position, disallows
     && position === 0
     && disallows.resuming === true
   ){
-    console.log('paused', paused)
-    console.log('length', track_window.next_tracks.length)
-    console.log('position', position)
-    console.log('disallows resuming', disallows.resuming)
-    console.log('playlist end returned true')
     return true
   }
-
   return false
 }
 
@@ -81,11 +83,6 @@ export function checkForPlaylistRestart ({paused, position, track_window, disall
     && track_window.previous_tracks.length === 0
     && disallows.pausing === true
   ){
-    console.log('paused', paused)
-    console.log('position', position)
-    console.log('how many previous tracks', track_window.previous_tracks.length)
-    console.log('disallows pausing', disallows.pausing)
-    console.log('playlist restart returned true')
     return true
   }
   return false
