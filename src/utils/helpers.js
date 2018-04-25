@@ -23,6 +23,7 @@ export function formatTracks ({ tracks }) {
 
   return filteredTracks.map((trackData) => {
     return {
+      id: trackData.track.id,
       name: trackData.track.name,
       artist: trackData.track.artists[0].name,
       album: trackData.track.album.name,
@@ -88,6 +89,9 @@ export function checkForPlaylistRestart ({paused, position, track_window, disall
   return false
 }
 
-export function isNextTrack ({ uri }, { track_window }){
-  return uri === track_window.current_track.uri
+export function isNextTrack ({ id }, { track_window }){
+  const linkedFrom = !! track_window.current_track.linked_from.id
+                        ? track_window.current_track.linked_from.id
+                        : null
+  return id === track_window.current_track.id || id === linkedFrom
 }
