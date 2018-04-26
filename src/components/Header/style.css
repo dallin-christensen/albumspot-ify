@@ -48,10 +48,27 @@
 .menu_option {
   font-size: 28px;
   margin-right:2px;
-  /* transition: all .1s ease-in-out; */
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
 }
 
-.menu_option:hover {
-  font-size: 32px;
-  margin-right: 0;
+.search_or_collapse {
+  display: flex;
+  align-items: center;
+}
+
+.extendable_search {
+  width: 0;
+  padding: 0;
+  border: none;
+  transition: all .1s ease-in-out;
+  height: 20px;
+  border-radius: 3px;
+}
+
+.extended_search {
+  width: 200px;
+  padding: 0 2px;
 }

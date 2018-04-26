@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchClearTracks, disconnectPlayer } from '../../utils/api'
 import { clearTracksAndArt, error, refreshToken, toggleSearchView } from '../../actions'
-import { IoAndroidSearch, IoAndroidArrowBack } from 'react-icons/lib/io'
+import { IoAndroidSearch, IoAndroidArrowDropright } from 'react-icons/lib/io'
 import logo_sm from '../../images/spotartify_200.png'
 import './style.css'
 
@@ -41,10 +41,20 @@ class Header extends Component {
             ? <div>score
                 <div className='header_score_container'>{this.props.score}/{this.props.tracksLen}</div>
               </div>
-            : <div onClick={this.toggleSearchView}
+            : <div
                 className='menu_option'
                 title={!searchView ? 'Search all public Spotify playlists' : 'Back to your playlists'} >
-                  {!searchView ? <IoAndroidSearch /> : <IoAndroidArrowBack />}
+                  <div
+                    onClick={this.toggleSearchView}
+                    className='search_or_collapse'>
+                    {!searchView ? <IoAndroidSearch /> : <IoAndroidArrowDropright />}
+                  </div>
+                  <input
+                    type='text'
+                    className={!searchView
+                                  ? 'extendable_search'
+                                  : 'extendable_search extended_search'}
+                  />
               </div>
         }
       </div>
