@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchClearTracks, disconnectPlayer } from '../../utils/api'
-import { clearTracksAndArt, error, refreshToken, toggleSearchView } from '../../actions'
+import { clearTracksAndArt, error, refreshToken,
+  toggleSearchView, setSearchKey, searchPlaylists, clearPlaylistSearch } from '../../actions'
 import { IoAndroidSearch, IoAndroidArrowDropright } from 'react-icons/lib/io'
 import logo_sm from '../../images/spotartify_200.png'
 import './style.css'
@@ -20,9 +21,22 @@ class Header extends Component {
   }
   toggleSearchView = () => {
     this.props.dispatch(toggleSearchView())
+    document.getElementById('searchKeyInput').focus()
+  }
+  setSearchKey = (e) => {
+    e.preventDefault()
+    this.props.dispatch(setSearchKey(e.target.value))
+
+    e.target.value ? this.searchPlaylists() : this.clearPlaylistSearch()
+  }
+  searchPlaylists = () => {
+    this.props.dispatch(searchPlaylists())
+  }
+  clearPlaylistSearch = () => {
+    this.props.dispatch(clearPlaylistSearch())
   }
   render () {
-    const { inGameview, searchView } = this.props
+    const { inGameview, searchView, searchKey } = this.props
     return (
       <div className='header_container'>
         <div className='header_title_container'>
@@ -51,6 +65,9 @@ class Header extends Component {
                   </div>
                   <input
                     type='text'
+                    id='searchKeyInput'
+                    onChange={this.setSearchKey}
+                    value={searchKey}
                     className={!searchView
                                   ? 'extendable_search'
                                   : 'extendable_search extended_search'}
@@ -62,11 +79,12 @@ class Header extends Component {
   }
 }
 
-function mapStateToProps({tracks, artwork, user, game}) {
+function mapStateToProps({tracks, artwork, user, game, playlistSearch}) {
   const tracksLen = Object.keys(tracks.tracks).length
   const inGameview = tracksLen && artwork.all.length ? true : false
   const { accessToken, deviceId, searchView } = user
   const { score } = game
+  const { searchKey } = playlistSearch
   return {
     inGameview,
     accessToken,
@@ -74,6 +92,7 @@ function mapStateToProps({tracks, artwork, user, game}) {
     score,
     tracksLen,
     searchView,
+    searchKey,
   }
 }
 

@@ -1,5 +1,5 @@
 export { setAllPlaylists } from './allPlaylists'
-export { setPlaylistSearch, clearPlaylistSearch } from './playlistSearch'
+export { setPlaylistSearch, clearPlaylistSearch, setSearchKey } from './playlistSearch'
 export { setArtwork, setWrongArtwork } from './artwork'
 export { guess, resetGuess, clearGame, nextNotAvailable, gameEnd } from './game'
 export { setPlaylist } from './playlist'

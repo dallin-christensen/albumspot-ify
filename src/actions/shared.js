@@ -80,9 +80,10 @@ export function createWrongArtwork () {
   }
 }
 
-export function searchPlaylists (searchKey) {
+export function searchPlaylists () {
   return (dispatch, getState) => {
     const accessToken = getState().user.accessToken
+    const { searchKey } = getState().playlistSearch
 
     const dispatchSetPlaylistSearch = (items) => {
       dispatch(setPlaylistSearch(items))
