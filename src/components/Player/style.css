@@ -12,6 +12,12 @@
   justify-content: space-between;
   box-shadow: 10px 10px 20px #556;
   border: 2px solid #ddd;
+  transition: all .1s ease-in-out;
+}
+
+.player_container:active {
+  box-shadow: 7px 7px 15px #505060;
+  transform: scale(0.99);
 }
 
 .left_section, .volume_section{
