@@ -8,10 +8,6 @@
   margin: 70px 0;
 }
 
-.renew_session_button {
-
-}
-
 .renew_session_button{
   font-size: 25px;
   padding: 10px 30px;
@@ -23,7 +19,6 @@
   transition: all .1s ease-in-out;
   margin-top: 1px;
   font-weight: bold;
-  /* width: 300px; */
 }
 
 .renew_session_button:hover {

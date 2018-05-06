@@ -25,9 +25,16 @@ class Header extends Component {
   }
   setSearchKey = (e) => {
     e.preventDefault()
+
     this.props.dispatch(setSearchKey(e.target.value))
 
-    e.target.value ? this.searchPlaylists() : this.clearPlaylistSearch()
+    !e.target.value
+      ? this.clearPlaylistSearch()
+      : setTimeout(() => {
+          document.getElementById('searchKeyInput').value === this.props.searchKey 
+            && this.props.searchKey !== '' 
+            && this.searchPlaylists()
+        }, 500);
   }
   searchPlaylists = () => {
     this.props.dispatch(searchPlaylists())
