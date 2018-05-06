@@ -1,8 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
-import { searchPlaylists, handleGetPlaylist, error, clearPlaylistSearch } from '../../actions'
+import { handleGetPlaylist } from '../../actions'
 import { PlaylistIcon } from '../'
-import { IoAndroidSearch } from 'react-icons/lib/io'
 import logo_md from '../../images/spotartify_200.png'
 import './style.css'
 

@@ -15,7 +15,7 @@ class GameReview extends Component {
     dispatch(handleGetPlaylist(playlistHref))
   }
   render () {
-    const { score, trackLen, playlistName, playlistImg, playlistHref, dispatch } = this.props
+    const { score, trackLen, playlistName, playlistImg } = this.props
     const percent = Math.round((score/trackLen) * 100)
     const goodNews = percent >= 70 ? true : false
     return (
