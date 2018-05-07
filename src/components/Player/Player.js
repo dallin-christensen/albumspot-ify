@@ -14,7 +14,7 @@ class Player extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      paused: false,
+      // paused: false,
       volume: 40,
       nextIsAvailable: !this.props.hasGuessed,
     }
@@ -26,26 +26,26 @@ class Player extends Component {
   }
 
   togglePause = () => {
-    const { token } = this.props
+    const { token, paused } = this.props
 
-    if(this.state.paused){
+    if(paused){
       fetchUnpause(token, this.invokeError, this.refreshToken)
     } else {
       fetchPause(token, this.invokeError, this.refreshToken)
     }
 
-    this.setState({
-      paused: !this.state.paused
-    })
+    // this.setState({
+    //   paused: !this.state.paused
+    // })
   }
 
   nextTrack = (e) => {
     const { token } = this.props
     this.props.dispatch(nextNotAvailable())
     fetchNext(token, this.invokeError, this.refreshToken)
-    this.setState({
-      paused: false,
-    })
+    // this.setState({
+    //   paused: false,
+    // })
   }
 
   changeVolume = (value) => {
@@ -69,7 +69,7 @@ class Player extends Component {
         <div className='left_section'>
           <div className='player_play_border'>
             <div className='player_play' onClick={this.togglePause}>
-              {this.state.paused
+              {this.props.paused
                 ? <FaPlay />
                 : <FaPause /> }
             </div>
@@ -100,14 +100,15 @@ class Player extends Component {
 function mapStateToProps({ user, tracks, game }){
   const allTracks = tracks.tracks
   const activeUri = allTracks[tracks.active].uri
-  const { hasGuessed, nextIsAvailable } = game
+  const { hasGuessed, nextIsAvailable, paused } = game
   return {
     tracks: allTracks,
     token: user.accessToken,
     deviceId: user.deviceId,
     activeUri,
     hasGuessed,
-    nextIsAvailable
+    nextIsAvailable,
+    paused
   }
 }
 

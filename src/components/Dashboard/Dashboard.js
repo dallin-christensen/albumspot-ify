@@ -4,7 +4,8 @@ import { ChoosePlaylist, GameView, Header } from '../'
 import SpotArtifyModal from '../Modal/SpotArtifyModal'
 import { connectPlayer, renderPlayer, fetchClearTracks, disconnectPlayer } from '../../utils/api'
 import { checkForChangedTrack, checkForPlaylistEnd, checkForPlaylistRestart, isNextTrack } from '../../utils/helpers'
-import { setDeviceId, error, refreshToken, loading, nextTrack, gameEnd, clearTracksAndArt } from '../../actions'
+import { setDeviceId, error, refreshToken, loading, nextTrack, gameEnd, 
+  clearTracksAndArt, pause, unPause } from '../../actions'
 import './style.css'
 
 function NoPlaylists (props) {
@@ -64,6 +65,8 @@ class Dashboard extends Component {
 
     if(!active){ return }
 
+    this.showPauseSate(response)
+
     if(checkForPlaylistEnd(response) || checkForPlaylistRestart(response)){
       this.props.dispatch(gameEnd())
       this.fetchClearTracks()
@@ -76,6 +79,14 @@ class Dashboard extends Component {
         this.fetchClearTracks()
       }
 
+    }
+  }
+
+  showPauseSate = (response) => {
+    const { paused, dispatch } = this.props
+
+    if(paused !== response.paused){
+      response.paused ? dispatch(pause()) : dispatch(unPause())
     }
   }
 
@@ -115,7 +126,7 @@ class Dashboard extends Component {
   }
 }
 
-function mapStateToProps ({ allPlaylists, tracks, artwork, user }) {
+function mapStateToProps ({ allPlaylists, tracks, artwork, user, game }) {
   const allTracks = tracks.tracks
   const active = allTracks.length ? allTracks[tracks.active] : null
   const trackNext = allTracks.length && tracks.active !== tracks.length - 1
@@ -131,6 +142,7 @@ function mapStateToProps ({ allPlaylists, tracks, artwork, user }) {
     refreshToken,
     active,
     trackNext,
+    paused: game.paused,
   }
 }
 
