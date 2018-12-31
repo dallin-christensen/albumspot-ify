@@ -8,6 +8,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Hosted site can be found here -> [SpotArtify](https://spotartify.firebaseapp.com)
 
+Note: this app will not work on moblie browswers as Spotify SDK does not support them.
+
 ![SpotArtify gif](https://github.com/dallin-christensen/albumspot-ify/raw/master/src/spotartify_gif.gif)
 
 ## Install
